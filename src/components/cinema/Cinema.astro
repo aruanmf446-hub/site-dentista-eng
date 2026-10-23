@@ -1,0 +1,252 @@
+---
+/**
+ * Sequência cinematográfica da home: Hero → Tratamentos → Especialidades.
+ *
+ * Modo cinema (qualquer largura, com WebGL e sem "reduzir movimento"):
+ *   .cinema__viewport fica fixo (sticky) enquanto a trilha rola; o progresso
+ *   da rolagem dirige câmera, dente, arco e textos (scripts/cinema/).
+ *   Abaixo de 900 px (html.cine-compact) a composição muda para celular/tablet
+ *   e cada cena ocupa menos rolagem (--cine-unit).
+ * Modo empilhado (movimento reduzido, sem WebGL, sem JavaScript):
+ *   os painéis viram seções comuns, com vistas 3D paradas ou SVG.
+ *
+ * Os comprimentos das cenas (em alturas de tela) dependem só das cenas
+ * ativas e da quantidade de especialidades — nenhuma posição absoluta da
+ * página inteira é fixada.
+ */
+import site from '@/lib/site';
+import HeroPanel from './HeroPanel.astro';
+import TratamentosPanel from './TratamentosPanel.astro';
+import EspecialidadesPanel from './EspecialidadesPanel.astro';
+
+const segments: { id: string; len: number; start: number }[] = [];
+const add = (id: string, len: number) => {
+  const start = segments.reduce((acc, s) => acc + s.len, 0);
+  segments.push({ id, len, start });
+};
+add('inicio', 1);
+if (site.cenaTratamentos) add('tratamentos', 3);
+if (site.cenaEspecialidades) add('especialidades', 1 + Math.max(1, site.c.especialidades.length) * 0.55 + 0.35);
+const total = segments.reduce((acc, s) => acc + s.len, 0);
+---
+
+<div
+  class="cinema"
+  data-cinema
+  data-segments={JSON.stringify(segments)}
+  data-hero-visual={site.c.hero.visual}
+  data-model={site.c.cena3d.modeloGlb}
+  style={`--cinema-len:${total}`}
+>
+  <div class="cinema__viewport" data-viewport>
+    <div class="stage" aria-hidden="true" data-stage>
+      <div class="stage__bg" data-stage-bg></div>
+      <div class="stage__arch" data-stage-arch></div>
+      <canvas class="stage__canvas" data-stage-canvas></canvas>
+      <div class="stage__leaders" data-leaders>
+        {['esmalte', 'polpa', 'dentina', 'raiz'].map((id) => (
+          <span class="leader" data-leader={id}><span class="leader__dot" /><span class="leader__line" /></span>
+        ))}
+      </div>
+    </div>
+    <HeroPanel />
+    {site.cenaTratamentos && <TratamentosPanel />}
+    {site.cenaEspecialidades && <EspecialidadesPanel />}
+  </div>
+  <div class="cinema__track" aria-hidden="true">
+    {
+      segments.map((s) => (
+        <div class="cinema__marker" data-cinema-marker={s.id} style={`top:calc(${s.start} * var(--cine-unit));height:calc(${s.len} * var(--cine-unit))`} />
+      ))
+    }
+  </div>
+</div>
+
+<style is:global>
+  /* ---------- Comum ---------- */
+  .stage,
+  .cinema__track {
+    display: none;
+  }
+  .view-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.6s var(--ease-out);
+    pointer-events: none;
+  }
+  .view-fallback {
+    transition: opacity 0.6s var(--ease-out);
+  }
+  html.views-ready .view-canvas.is-live {
+    opacity: 1;
+  }
+  html.views-ready .view-canvas.is-live ~ .view-fallback,
+  html.views-ready .view-live > .view-fallback {
+    opacity: 0;
+  }
+
+  /* ---------- Modo cinema ---------- */
+  /* Unidade de rolagem de cada cena: 1,5 tela no desktop; 1,1 no celular
+     (com a roda do mouse, 1 tela por cena passava rápido demais).
+     vh = viewport "grande" (barras do navegador recolhidas) no iOS e no
+     Android, portanto não muda quando a barra de endereço aparece/some. */
+  html.is-cinema {
+    --cine-unit: 150vh;
+    /* faixa coberta pelas barras do navegador quando visíveis (0 no desktop) */
+    --cine-ui-bottom: 0px;
+  }
+  html.is-cinema.cine-compact {
+    --cine-unit: 110vh;
+  }
+  @supports (height: 100svh) {
+    html.is-cinema.cine-compact {
+      --cine-ui-bottom: calc(100vh - 100svh);
+    }
+  }
+  html.is-cinema .cinema {
+    position: relative;
+    z-index: 0;
+  }
+  html.is-cinema .cinema__viewport {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 1;
+  }
+  html.is-cinema .cinema__track {
+    display: block;
+    position: relative;
+    z-index: -1;
+    margin-top: -100vh;
+    height: calc(var(--cinema-len) * var(--cine-unit) + 100vh);
+    pointer-events: none;
+  }
+  html.is-cinema .cinema__marker {
+    position: absolute;
+    left: 0;
+    width: 1px;
+    scroll-margin-top: calc(-1 * (var(--header-h) + 12px));
+  }
+  html.is-cinema .stage {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+  html.is-cinema .stage__bg {
+    position: absolute;
+    inset: 0;
+    background: var(--c-bg);
+  }
+  html.is-cinema .stage__arch {
+    position: absolute;
+    inset: 0;
+    background: var(--c-primary);
+    clip-path: inset(100% 0 0 0);
+    will-change: clip-path;
+  }
+  html.is-cinema .stage__canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s var(--ease-out);
+  }
+  html.is-cinema.stage-ready .stage__canvas {
+    opacity: 1;
+  }
+  html.is-cinema .stage__leaders {
+    position: absolute;
+    inset: 0;
+  }
+  .leader {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: block;
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+  .leader__dot {
+    position: absolute;
+    left: -3.5px;
+    top: -3.5px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--c-on-primary);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--c-on-primary) 18%, transparent);
+  }
+  .leader__line {
+    position: absolute;
+    left: 3px;
+    top: 0;
+    height: 1px;
+    width: var(--len, 40px);
+    background: rgba(247, 237, 234, 0.5);
+    transform-origin: left center;
+  }
+  html.is-cinema .panel {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    min-height: 0;
+    z-index: 2;
+    background: transparent;
+  }
+  /* sem will-change permanente nos textos: camadas de GPU fixas deixam o texto
+     suave no Safari em posições fracionárias (o GSAP promove só durante o tween) */
+  /* até a timeline assumir, só o hero aparece (evita painéis sobrepostos) */
+  html.is-cinema:not(.cinema-ready) .panel:not(.hero) {
+    visibility: hidden;
+  }
+  html.is-cinema.cinema-ready .panel:not(.is-active) {
+    pointer-events: none;
+  }
+  html.is-cinema .hero__inner {
+    min-height: 100%;
+  }
+  /* o arco/dente do hero passam para o palco quando a cena 3D está pronta */
+  html.is-cinema.stage-ready .hero__arch {
+    background: transparent;
+  }
+  html.is-cinema.stage-ready .hero__tooth-svg {
+    visibility: hidden;
+  }
+  /* enquanto o 3D prepara (fração de segundo), nada de dente 2D: só um brilho
+     suave e parado no arco (animação infinita aqui atrasava o 3D: o navegador
+     recompõe a tela a cada quadro); se demorar (aparelho lento), o desenho
+     volta (stage-slow) */
+  html.is-cinema:not(.stage-ready):not(.stage-slow) .hero__tooth-svg {
+    opacity: 0;
+  }
+  html.is-cinema:not(.stage-ready):not(.stage-slow) .hero__tooth::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 46%;
+    width: 46%;
+    aspect-ratio: 1;
+    translate: -50% -50%;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0));
+    pointer-events: none;
+  }
+  html.is-cinema.stage-ready .esp .view-fallback {
+    visibility: hidden;
+  }
+  /* antes do 3D ficar pronto, o desenho de reserva de uma cena só aparece com
+     ela (a arcada em CSS das especialidades não pode surgir sobre o hero) */
+  html.is-cinema.cinema-ready .panel:not(.is-active) .view-fallback {
+    visibility: hidden;
+  }
+  html.is-cinema .panel .view-canvas {
+    display: none;
+  }
+</style>

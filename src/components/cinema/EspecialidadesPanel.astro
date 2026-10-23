@@ -1,0 +1,519 @@
+---
+/**
+ * 02 · Especialidades — "o dente vira arcada". Lista à esquerda (clique)
+ * + progressão pela rolagem no modo cinema. Funciona com 1..N especialidades.
+ * O destaque na arcada é ilustrativo e não representa diagnóstico.
+ */
+import site from '@/lib/site';
+import Eyebrow from '@/components/ui/Eyebrow.astro';
+import Title from '@/components/ui/Title.astro';
+import Icon from '@/components/ui/Icon.astro';
+import ArchPhoto from '@/components/ui/ArchPhoto.astro';
+import ArcadeCss from './svg/ArcadeCss.astro';
+import { dentesDestacados } from '@/lib/arcade';
+
+const { c, numeroDe } = site;
+const specs = c.especialidades;
+const total = String(specs.length).padStart(2, '0');
+const linkPara = (s: (typeof specs)[number]) => {
+  const prof = s.profissionais.map((p) => c.equipe.find((e) => e.slug === p)).filter(Boolean);
+  const comPagina = prof.find((p) => p!.pagina && p!.bio.length);
+  if (comPagina) return { href: `/equipe/${comPagina.slug}/`, rotulo: `Conheça ${comPagina.nome}` };
+  if (prof.length && site.ativo('equipe')) return { href: '/#equipe', rotulo: 'Conheça os especialistas' };
+  const trat = c.tratamentos.find((t) => t.especialidade === s.slug);
+  if (trat) return { href: `/tratamentos/${trat.slug}/`, rotulo: `Saiba mais sobre ${trat.nome.toLowerCase()}` };
+  return { href: '/#agendamento', rotulo: 'Agendar avaliação' };
+};
+const presets = specs.map((s) => ({ dentes: dentesDestacados(s.destaque.dentes), efeito: s.destaque.efeito }));
+---
+
+<section
+  id="especialidades"
+  class="panel esp"
+  data-panel="especialidades"
+  data-surface="light"
+  aria-labelledby="esp-title"
+  data-count={specs.length}
+  data-especialidades
+>
+  <script type="application/json" data-esp-presets set:html={JSON.stringify(presets)} />
+  <div class="esp__inner">
+    <div class="esp__copy" data-cine="esp-copy">
+      <Eyebrow numero={numeroDe('especialidades')} texto="Especialidades" />
+      <Title id="esp-title" class="esp__title" text={c.especialidadesSecao.titulo} />
+      <ul role="list" class="esp__list" style={`--n:${specs.length}`} data-cine="esp-list">
+        {
+          specs.map((s, i) => (
+            <li>
+              <button
+                type="button"
+                class="esp__item"
+                data-spec-index={i}
+                aria-pressed={i === 0 ? 'true' : 'false'}
+                aria-controls="esp-detalhe"
+              >
+                <span class="esp__num">{String(i + 1).padStart(2, '0')}</span>
+                <span class="esp__name">{s.nome}</span>
+                <Icon name="arrow-right" class="esp__arrow" />
+              </button>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="esp__visual">
+      <div class="esp__arcade" data-anchor="arcada">
+        <ArcadeCss class="view-fallback" />
+        <canvas class="view-canvas" data-view="especialidades" aria-hidden="true" />
+      </div>
+      <div class="esp__detail" id="esp-detalhe" aria-live="polite" data-cine="esp-detail">
+        {
+          specs.map((s, i) => {
+            const link = linkPara(s);
+            return (
+              <article class="esp__card" data-spec-detail={i} hidden={i !== 0}>
+                {s.foto && <ArchPhoto foto={s.foto} class="esp__photo" sizes="96px" widths={[96, 192]} reveal={false} />}
+                <p class="esp__count">
+                  {String(i + 1).padStart(2, '0')} / {total}
+                </p>
+                <h3 class="esp__card-title">{s.nome}</h3>
+                <p class="esp__card-text">{s.descricao}</p>
+                <a href={link.href} class="esp__card-link">
+                  {link.rotulo}
+                  <Icon name="arrow-right" size={16} />
+                </a>
+              </article>
+            );
+          })
+        }
+      </div>
+    </div>
+  </div>
+  <p class="esp__note">Destaques ilustrativos. O diagnóstico e a indicação de tratamento dependem de avaliação clínica.</p>
+</section>
+
+<style>
+  .esp {
+    position: relative;
+    background: var(--c-bg);
+  }
+  .esp__inner {
+    max-width: var(--max);
+    margin-inline: auto;
+    padding: var(--section-gap) var(--gutter);
+    display: grid;
+    grid-template-columns: minmax(0, 470px) minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+  .esp__title {
+    margin-top: 26px;
+    font-family: var(--f-serif);
+    font-size: var(--fs-h2);
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+  }
+  .esp__list {
+    margin: 44px 0 0;
+    padding: 0;
+    width: min(420px, 100%);
+    border-bottom: 1px solid var(--c-line);
+  }
+  .esp__list li {
+    border-top: 1px solid var(--c-line);
+  }
+  .esp__item {
+    width: 100%;
+    min-height: 44px;
+    height: 58px;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: var(--f-serif);
+    font-size: 26px;
+    color: var(--c-ink);
+    text-align: left;
+    transition: color 0.3s var(--ease-out);
+  }
+  .esp__item:hover {
+    color: var(--c-primary);
+  }
+  .esp__num {
+    width: 28px;
+    font-family: var(--f-sans);
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+  .esp__name {
+    flex: 1;
+  }
+  .esp__arrow {
+    opacity: 0;
+    transform: translateX(-8px);
+    transition:
+      opacity 0.3s var(--ease-out),
+      transform 0.4s var(--ease-out);
+  }
+  .esp__item[aria-pressed='true'] {
+    color: var(--c-primary);
+  }
+  .esp__item[aria-pressed='true'] .esp__arrow {
+    opacity: 1;
+    transform: none;
+  }
+  .esp__visual {
+    position: relative;
+    min-height: 520px;
+  }
+  .esp__arcade {
+    position: relative;
+    width: min(800px, 100%);
+    aspect-ratio: 800 / 640;
+    margin-left: auto;
+  }
+  .esp__arcade :global(.view-fallback) {
+    position: absolute;
+    inset: 0;
+  }
+  .esp__detail {
+    position: absolute;
+    left: 50%;
+    top: 56%;
+    width: min(340px, 60%);
+    transform: translateX(-38%);
+    text-align: center;
+  }
+  .esp__card.is-entering {
+    animation: card-in 0.55s var(--ease-out);
+  }
+  @keyframes card-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+  html:not(.js) .esp__card[hidden] {
+    display: block;
+    margin-top: 24px;
+  }
+  .esp__photo {
+    width: 72px;
+    height: 96px;
+    margin: 0 auto 14px;
+  }
+  .esp__count {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+  }
+  .esp__card-title {
+    margin-top: 10px;
+    font-family: var(--f-serif);
+    font-style: italic;
+    font-size: clamp(32px, 2.2vw + 10px, 40px);
+    line-height: 1.05;
+    color: var(--c-primary);
+  }
+  .esp__card-text {
+    margin: 12px auto 0;
+    max-width: 300px;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--c-text);
+  }
+  .esp__card-link {
+    margin-top: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .esp__note {
+    max-width: var(--max);
+    margin: -48px auto 0;
+    padding: 0 var(--gutter) 32px;
+    font-size: 12px;
+    color: var(--c-muted);
+    text-align: right;
+  }
+
+  @media (max-width: 899px) {
+    .esp__inner {
+      padding: 72px 20px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .esp__title {
+      margin-top: 14px;
+      font-size: 36px;
+    }
+    .esp__list {
+      margin-top: 28px;
+      width: 100%;
+    }
+    .esp__item {
+      height: 54px;
+      font-size: 23px;
+    }
+    .esp__copy {
+      display: contents;
+    }
+    .esp__copy :global(.eyebrow),
+    .esp__title {
+      order: -3;
+    }
+    .esp__visual {
+      order: -2;
+      min-height: 0;
+      margin: 8px 0 0;
+    }
+    .esp__arcade {
+      width: 100%;
+      margin: 0;
+    }
+    .esp__detail {
+      position: relative;
+      left: auto;
+      top: auto;
+      width: auto;
+      transform: none;
+      margin-top: -18%;
+      padding: 0 20px;
+    }
+    .esp__note {
+      margin-top: 0;
+      padding: 0 20px 40px;
+      text-align: left;
+    }
+  }
+
+  /* Modo cinema: painel fixo, lista + arcada lado a lado */
+  :global(html.is-cinema) .esp {
+    background: transparent;
+  }
+  :global(html.is-cinema) .esp__inner {
+    position: absolute;
+    inset: 0;
+    padding: clamp(110px, 18.9vh, 170px) var(--gutter) 0;
+    max-width: none;
+  }
+  :global(html.is-cinema) .esp__item {
+    height: clamp(44px, calc((100vh - 470px) / var(--n)), 58px);
+    font-size: clamp(20px, calc((100vh - 470px) / var(--n) * 0.45), 26px);
+  }
+  :global(html.is-cinema) .esp__visual {
+    position: absolute;
+    left: 38.9vw;
+    top: 15.5vh;
+    width: 55.6vw;
+    height: 71vh;
+  }
+  :global(html.is-cinema) .esp__arcade {
+    position: absolute;
+    inset: 0;
+    width: auto;
+    aspect-ratio: auto;
+  }
+  :global(html.is-cinema) .esp__detail {
+    left: 50%;
+    top: 56%;
+    width: 340px;
+    transform: translateX(-50%);
+  }
+  :global(html.is-cinema) .esp__note {
+    position: absolute;
+    right: calc(var(--gutter) + 160px);
+    bottom: 28px;
+    margin: 0;
+    padding: 0;
+  }
+  /* Modo cinema compacto (celular/tablet): título, arcada 3D, detalhe e lista em duas colunas */
+  @media (max-width: 899px) {
+    :global(html.is-cinema) .esp__inner {
+      display: flex;
+      flex-direction: column;
+      padding: calc(var(--header-h) + 22px) 20px calc(var(--mobile-bar-h) + var(--cine-ui-bottom) + 50px);
+    }
+    :global(html.is-cinema) .esp__title {
+      margin-top: 10px;
+      font-size: clamp(1.75rem, 1.1rem + 3.3vw, 2.4rem);
+    }
+    :global(html.is-cinema) .esp__visual {
+      position: relative;
+      left: auto;
+      top: auto;
+      width: 100%;
+      height: auto;
+      margin-top: 4px;
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    :global(html.is-cinema) .esp__arcade {
+      position: relative;
+      inset: auto;
+      width: min(100%, 52vh);
+      aspect-ratio: 800 / 640;
+      flex: none;
+    }
+    :global(html.is-cinema) .esp__detail {
+      position: relative;
+      left: auto;
+      top: auto;
+      transform: none;
+      width: min(100%, 360px);
+      margin-top: -21%;
+      padding: 0;
+    }
+    :global(html.is-cinema) .esp__card-title {
+      margin-top: 4px;
+      font-size: clamp(26px, 6.5vw, 34px);
+    }
+    :global(html.is-cinema) .esp__card-text {
+      margin-top: 6px;
+      font-size: 14px;
+      line-height: 1.45;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    :global(html.is-cinema) .esp__card-link {
+      margin-top: 2px;
+    }
+    :global(html.is-cinema) .esp__photo {
+      display: none;
+    }
+    :global(html.is-cinema) .esp__list {
+      order: 0;
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 16px;
+      border-bottom: 0;
+    }
+    :global(html.is-cinema) .esp__list li {
+      border-top: 0;
+      border-bottom: 1px solid var(--c-line);
+    }
+    :global(html.is-cinema) .esp__item {
+      height: 44px;
+      font-size: clamp(17px, 4.4vw, 20px);
+      gap: 8px;
+    }
+    :global(html.is-cinema) .esp__num {
+      width: 18px;
+      font-size: 10px;
+    }
+    :global(html.is-cinema) .esp__arrow {
+      display: none;
+    }
+    :global(html.is-cinema) .esp__note {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: calc(var(--mobile-bar-h) + var(--cine-ui-bottom) + 8px);
+      font-size: 10px;
+      text-align: left;
+    }
+  }
+  @media (max-width: 899px) and (max-height: 740px) {
+    :global(html.is-cinema) .esp__card-text {
+      display: none;
+    }
+  }
+  /* Desktop estreito (900–1239 px): a arcada fica abaixo da linha do título */
+  @media (min-width: 900px) and (max-width: 1239px) {
+    :global(html.is-cinema) .esp__visual {
+      left: 44vw;
+      top: 26vh;
+      width: 52vw;
+      height: 64vh;
+    }
+    :global(html.is-cinema) .esp__copy {
+      width: 38vw;
+    }
+  }
+
+  /* Desktop baixo: título e lista encolhem pela altura; arcada e cartão sobem;
+     o aviso fica numa faixa própria no rodapé, sem encostar no link do cartão */
+  @media (min-width: 900px) and (max-height: 760px) {
+    :global(html.is-cinema) .esp__inner {
+      padding-top: calc(88px + 2.5vh);
+    }
+    :global(html.is-cinema) .esp__title {
+      margin-top: 1.6vh;
+      font-size: min(var(--fs-h2), 7.6vh);
+    }
+    :global(html.is-cinema) .esp__list {
+      margin-top: 3vh;
+    }
+    :global(html.is-cinema) .esp__item {
+      height: clamp(36px, calc((100vh - 88px - 2.5vh - 16vh - 3vh - 48px) / var(--n)), 58px);
+      font-size: clamp(18px, calc((100vh - 300px) / var(--n) * 0.42), 26px);
+    }
+    :global(html.is-cinema) .esp__visual {
+      top: calc(88px + 1vh);
+      /* a arcada termina acima da faixa do aviso */
+      height: calc(100vh - 88px - 1vh - 96px);
+      min-height: 0;
+    }
+    :global(html.is-cinema) .esp__detail {
+      top: 48%;
+    }
+    :global(html.is-cinema) .esp__card-title {
+      font-size: min(clamp(32px, 2.2vw + 10px, 40px), 5.6vh);
+    }
+    :global(html.is-cinema) .esp__card-text {
+      margin-top: 0.8vh;
+      font-size: 14px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    :global(html.is-cinema) .esp__card-link {
+      margin-top: 0.6vh;
+    }
+    :global(html.is-cinema) .esp__note {
+      /* faixa própria sob a coluna da arcada (não invade a lista nem o WhatsApp) */
+      left: 40vw;
+      right: calc(var(--gutter) + 170px);
+      bottom: 12px;
+      font-size: 11px;
+      text-align: center;
+    }
+  }
+  /* celular baixo (ex. 375 × 667): arcada menor e sem encolher — a lista vem depois */
+  @media (max-width: 899px) and (max-height: 740px) {
+    :global(html.is-cinema) .esp__visual {
+      flex: none;
+    }
+    :global(html.is-cinema) .esp__arcade {
+      width: min(100%, 35vh);
+    }
+    :global(html.is-cinema) .esp__detail {
+      margin-top: -15%;
+    }
+    :global(html.is-cinema) .esp__card-link {
+      min-height: 40px;
+    }
+    :global(html.is-cinema) .esp__title {
+      font-size: clamp(1.6rem, 1rem + 2.8vw, 2rem);
+    }
+    :global(html.is-cinema) .esp__item {
+      height: 40px;
+    }
+  }
+</style>
