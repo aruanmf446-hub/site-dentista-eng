@@ -1,0 +1,29 @@
+name: Import the original dental template
+
+on:
+  push:
+    paths:
+      - '.github/workflows/import-original.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  copy-original:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out English repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Clone original template
+        run: git clone --depth 1 https://github.com/aruanmf446-hub/site-dentista.git /tmp/dental-original
+      - name: Copy complete template, retaining English repository instructions
+        run: |
+          rsync -a --exclude='.git' --exclude='README.md' /tmp/dental-original/ ./
+          git add -A
+          if ! git diff --cached --quiet; then
+            git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Replica template original no projeto internacional'
+            git push origin HEAD:main
+          fi
