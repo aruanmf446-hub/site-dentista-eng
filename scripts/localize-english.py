@@ -478,5 +478,105 @@ The template keeps independent configurable sections for treatments, specialties
     print("Localized " + str(len(changed)) + " files:")
     for f in changed: print("  " + f)
 
+
+def finalize():
+    """Polish residual Portuguese labels and set international defaults."""
+    fixes = {
+        "src/components/forms/BookingForm.astro": {"</a> (LGPD).": "</a>."},
+        "src/components/navigation/Dialogs.astro": {
+            'Choose a <em class="destaque">unidade</em>': 'Choose a <em class="destaque">location</em>',
+            'aria-label="Fechar"': 'aria-label="Close"',
+            "        Entendi": "        Got it",
+        },
+        "src/components/layout/Footer.astro": {"· CNPJ {legal.cnpj}": "· Business ID {legal.cnpj}"},
+        "src/components/sections/Agendamento.astro": {"'Endereço'": "'Address'"},
+        "src/components/sections/Unidades.astro": {
+            " à {u.nome}": " for {u.nome}",
+            "WhatsApp da " + "$" + "{u.nome}": "WhatsApp for " + "$" + "{u.nome}",
+        },
+        "src/components/sections/Equipe.astro": {
+            "Sobre <Icon": "About <Icon",
+            "join(' e ')": "join(' and ')",
+        },
+        "src/pages/about.astro": {"· CNPJ {c.legal.cnpj}": "· Business ID {c.legal.cnpj}"},
+        "src/pages/team/[...slug].astro": {
+            "join(' e ')": "join(' and ')",
+            'texto="Formação"': 'texto="Education & qualifications"',
+        },
+        "src/pages/locations/[...slug].astro": {'texto="Quem atende nesta unidade"': 'texto="Clinicians at this location"'},
+        "src/components/cinema/EspecialidadesPanel.astro": {
+            "Conheça " + "$" + "{comPagina.nome}": "Meet " + "$" + "{comPagina.nome}",
+            "Saiba mais sobre " + "$" + "{trat.nome.toLowerCase()}": "Learn more about " + "$" + "{trat.nome.toLowerCase()}",
+        },
+        "src/pages/treatments/[slug].astro": {
+            "Tratamento · " + "$" + "{especialidade.nome}": "Treatment · " + "$" + "{especialidade.nome}",
+        },
+        "src/lib/whatsapp.ts": {
+            "• Unidade:": "• Location:",
+            "• Interesse:": "• Reason for visit:",
+            "• Período de preferência:": "• Preferred time:",
+        },
+        "src/scripts/ui/forms.ts": {
+            "Unidade " + "$" + "{unidade.nome}": "Location " + "$" + "{unidade.nome}",
+            ".replace(/^Unidade Unidade/, 'Location')": "",
+        },
+        "src/clients/alva-demo/clinic.ts": {
+            "[Logo convênio " + "$" + "{i + 1}]": "[Insurance logo " + "$" + "{i + 1}]",
+        },
+        "src/lib/seo.ts": {
+            "addressCountry: (e as typeof e & { pais?: string }).pais || 'US',":
+            "addressCountry: e.pais || 'US',",
+        },
+        "src/config/clinic.schema.ts": {
+            "  uf: z.string(),\n  cep:": "  uf: z.string(),\n  /** Country code: US, GB, CA, AU, etc. */\n  pais: z.string().length(2).default('US'),\n  cep:",
+        },
+        "src/clients/_modelo/clinic.ts": {
+            "[Nome da Clínica]": "[Practice Name]",
+            "[nome]": "[brand]",
+            "Odontologia em": "Dental Care in",
+            "[(00) 0000-0000]": "[+1 000 000 0000]",
+            "[55DDD000000000]": "[International WhatsApp number]",
+            "[Descrição curta da clínica para buscadores, até ~155 caracteres.]":
+                "[Brief, accurate practice description for search engines.]",
+            "[Frase de apresentação da clínica.]": "[A welcoming introduction to your practice.]",
+            "nome: 'Avaliação'": "nome: 'Dental checkup'",
+            "slug: 'avaliacao'": "slug: 'dental-checkup'",
+            "[Uma frase sobre a avaliação.]": "[One sentence about the consultation.]",
+            "[Texto próprio sobre a avaliação, revisado pelo responsável técnico.]":
+                "[Clinician-reviewed copy about the consultation.]",
+            "[Nome da unidade]": "[Practice Location]",
+            "[Rua]": "[Street]", "[número]": "[Number]",
+            "[Bairro]": "[Neighborhood]", "[Cidade]": "[City]", "[UF]": "[State]",
+            "Seg a sex": "Mon–Fri", "[8h–18h]": "[9 am–6 pm]",
+            "[CRO-UF 00000]": "[Professional license number]",
+            "[Razão social]": "[Registered business name]",
+        },
+    }
+    for relative, mapping in fixes.items():
+        file = ROOT / relative
+        if file.exists():
+            src = file.read_text(encoding="utf-8")
+            new = replace_pairwise(src, mapping)
+            if new != src:
+                file.write_text(new, encoding="utf-8")
+                print("Polished", relative)
+    privacy = ROOT / "src/pages/privacy.astro"
+    src = privacy.read_text(encoding="utf-8")
+    src = src.replace("const { c } = site.c ? { c: site.c } : { c: site.c };", "const { c } = site;")
+    if "<style>" not in src:
+        src += """
+<style>
+  .page { padding-right: var(--gutter-r); padding-bottom: var(--section-gap); }
+  .legal { margin-top: 56px; max-width: 720px; }
+  .legal h2 { margin-top: 44px; font-family: var(--f-serif); font-size: 28px; line-height: 1.15; }
+  .legal p { margin-top: 14px; font-size: 16px; line-height: 1.7; color: var(--c-ink-2); }
+  .legal__demo { padding: 12px 16px; border: 1px dashed var(--c-line-strong); border-radius: 12px; color: var(--c-muted) !important; }
+  @media (max-width: 899px) { .page { padding-right: var(--gutter); } }
+</style>
+"""
+    privacy.write_text(src, encoding="utf-8")
+    print("Polished privacy page")
+
 if __name__ == "__main__":
     main()
+    finalize()
