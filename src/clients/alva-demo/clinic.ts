@@ -286,7 +286,7 @@ export default defineClinic({
 
   convenios: {
     titulo: 'Accepted insurance plans',
-    itens: Array.from({ length: 6 }, (_, i) => ({ nome: `[Logo convênio ${i + 1}]` })),
+    itens: Array.from({ length: 6 }, (_, i) => ({ nome: `[Insurance logo ${i + 1}]` })),
     observacao: 'Self-pay patients are welcome. [Payment information.]',
   },
 

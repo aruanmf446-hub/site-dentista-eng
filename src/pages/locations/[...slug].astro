@@ -104,7 +104,7 @@ const tel = u ? (isReal(u.telefone) ? u.telefone : null) : null;
             </dl>
             {equipe.length > 0 && site.ativo('equipe') && (
               <div class="un__team">
-                <Eyebrow texto="Quem atende nesta unidade" />
+                <Eyebrow texto="Clinicians at this location" />
                 <ul role="list" class="rule-list" data-reveal="rows">
                   {equipe.map((p) => (
                     <li>

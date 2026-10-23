@@ -27,7 +27,7 @@ const ano = new Date().getFullYear();
       {site.multiUnidade && site.ativo('unidades') && <li><a href="/locations/">Locations</a></li>}
       {redes.map(([k, v]) => <li><a href={v} rel="noopener" target="_blank">{nomesRedes[k] ?? k}</a></li>)}
     </ul>
-    <p class="ftr__legal">© {ano} {legal.razaoSocial} · CNPJ {legal.cnpj}</p>
+    <p class="ftr__legal">© {ano} {legal.razaoSocial} · Business ID {legal.cnpj}</p>
   </div>
   {
     site.demo && (

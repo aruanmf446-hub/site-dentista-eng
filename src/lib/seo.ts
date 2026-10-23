@@ -52,7 +52,7 @@ function unidadeLd(u: Unidade, c: ClinicConfig, url: string): Json | null {
       addressLocality: e.cidade,
       addressRegion: e.uf,
       postalCode: isReal(e.cep) ? e.cep : undefined,
-      addressCountry: (e as typeof e & { pais?: string }).pais || 'US',
+      addressCountry: e.pais || 'US',
     }),
     geo: u.geo ? { '@type': 'GeoCoordinates', latitude: u.geo.lat, longitude: u.geo.lng } : undefined,
     openingHoursSpecification: horarios,

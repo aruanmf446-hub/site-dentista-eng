@@ -47,6 +47,8 @@ const enderecoSchema = z.object({
   bairro: z.string(),
   cidade: z.string(),
   uf: z.string(),
+  /** Country code: US, GB, CA, AU, etc. */
+  pais: z.string().length(2).default('US'),
   cep: z.string().optional(),
 });
 

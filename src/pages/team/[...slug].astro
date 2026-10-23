@@ -71,14 +71,14 @@ const tratamentos = p
               trilha={[{ nome: 'Home', href: '/' }, { nome: 'Team', href: '/team/' }, { nome: p.nome }]}
               rotulo={p.especialidade}
               titulo={p.nome}
-              texto={`${p.cro}${p.unidades.length && site.multiUnidade ? ` · Practices at ${p.unidades.map(unidadeNome).join(' e ')}` : ''}`}
+              texto={`${p.cro}${p.unidades.length && site.multiUnidade ? ` · Practices at ${p.unidades.map(unidadeNome).join(' and ')}` : ''}`}
             />
             <div class="prof__bio">
               {p.bio.map((b) => <p data-reveal="text">{b}</p>)}
             </div>
             {p.formacao.length > 0 && (
               <div class="prof__block">
-                <Eyebrow texto="Formação" />
+                <Eyebrow texto="Education & qualifications" />
                 <ul role="list" class="rule-list prof__list" data-reveal="rows">
                   {p.formacao.map((f) => <li>{f}</li>)}
                 </ul>

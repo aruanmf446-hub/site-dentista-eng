@@ -20,20 +20,20 @@ export default defineClinic({
   site: {
     modo: 'demonstracao', // troque para 'producao' quando os dados estiverem completos
     url: 'https://www.your-dental-practice.com', // troque pelo domínio real
-    titulo: '[Nome da Clínica] — Odontologia em [City]',
-    descricao: '[Descrição curta da clínica para buscadores, até ~155 caracteres.]',
+    titulo: '[Practice Name] — Dental Care in [City]',
+    descricao: '[Brief, accurate practice description for search engines.]',
   },
 
   marca: {
-    nome: '[Nome da Clínica]',
-    nomeCurto: '[nome]',
+    nome: '[Practice Name]',
+    nomeCurto: '[brand]',
     descritor: 'Dentistry',
     cores: { primaria: '#5B1626' }, // contraste com texto claro ≥ 4,5:1 (o build avisa)
   },
 
   contato: {
-    whatsapp: '[55DDD000000000]', // só dígitos, com DDI 55
-    telefone: '[(00) 0000-0000]',
+    whatsapp: '[International WhatsApp number]', // só dígitos, com DDI 55
+    telefone: '[+1 000 000 0000]',
     email: '[hello@example-dental.com]',
     redes: {},
   },
@@ -41,16 +41,16 @@ export default defineClinic({
   hero: {
     local: 'Modern dentistry · [Neighborhood, City]',
     titulo: 'Thoughtful care for\nyour *best smile.*',
-    texto: '[Frase de apresentação da clínica.]',
+    texto: '[A welcoming introduction to your practice.]',
     visual: '3d',
   },
 
   tratamentos: [
     {
-      slug: 'avaliacao',
-      nome: 'Avaliação',
-      resumo: '[Uma frase sobre a avaliação.]',
-      descricao: ['[Texto próprio sobre a avaliação, revisado pelo responsável técnico.]'],
+      slug: 'dental-checkup',
+      nome: 'Dental checkup',
+      resumo: '[One sentence about the consultation.]',
+      descricao: ['[Clinician-reviewed copy about the consultation.]'],
     },
   ],
 
@@ -59,9 +59,9 @@ export default defineClinic({
   unidades: [
     {
       id: 'principal',
-      nome: '[Nome da unidade]',
+      nome: '[Practice Location]',
       endereco: { logradouro: '[Street]', numero: '[Number]', bairro: '[Neighborhood]', cidade: '[City]', uf: '[State]' },
-      horarios: [{ dias: 'Mon–Fri', horas: '[8h–18h]' }],
+      horarios: [{ dias: 'Mon–Fri', horas: '[9 am–6 pm]' }],
       fotos: [],
     },
   ],
@@ -73,7 +73,7 @@ export default defineClinic({
   },
 
   legal: {
-    responsavelTecnico: { nome: 'Dr. [Full Name]', cro: '[CRO-UF 00000]' },
+    responsavelTecnico: { nome: 'Dr. [Full Name]', cro: '[Professional license number]' },
     razaoSocial: '[Registered business name]',
     cnpj: '[Business registration number]',
     encarregado: { email: '[privacy@example-dental.com]' },

@@ -49,10 +49,10 @@ const titulo = multiUnidade ? c.unidadesSecao.tituloVarias : c.unidadesSecao.tit
             {u.mapa && (
               <a href={u.mapa} class="btn btn--outline unid__btn" target="_blank" rel="noopener">
                 <Icon name="pin" size={16} />
-                Get directions<span class="sr-only"> à {u.nome} (opens in a new tab)</span>
+                Get directions<span class="sr-only"> for {u.nome} (opens in a new tab)</span>
               </a>
             )}
-            <WaLink unidade={u.id} class="btn btn--primary unid__btn" aria-label={`WhatsApp da ${u.nome}`}>
+            <WaLink unidade={u.id} class="btn btn--primary unid__btn" aria-label={`WhatsApp for ${u.nome}`}>
               <Icon name="whatsapp" />
               {multiUnidade ? 'Location WhatsApp' : 'WhatsApp'}
             </WaLink>

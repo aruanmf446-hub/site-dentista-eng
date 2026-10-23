@@ -32,8 +32,8 @@ export function buildMensagem(p: PedidoContato): string {
       ? `I’d like to learn more and request an appointment for ${p.tratamento}.`
       : 'I’d like to request an appointment.',
   );
-  if (p.unidade) linhas.push(`• Unidade: ${p.unidade}`);
-  if (p.motivo) linhas.push(`• Interesse: ${p.motivo}`);
+  if (p.unidade) linhas.push(`• Location: ${p.unidade}`);
+  if (p.motivo) linhas.push(`• Reason for visit: ${p.motivo}`);
   if (p.periodo) linhas.push(`• Preferred time of day: ${p.periodo}`);
   linhas.push('I look forward to arranging a convenient time.');
   return linhas.join('\n');

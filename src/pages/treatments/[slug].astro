@@ -54,7 +54,7 @@ const descricao = t.seo.descricao ?? t.resumo;
     <div class="trp__top container">
       <PageHeader
         trilha={[{ nome: 'Home', href: '/' }, { nome: 'Treatments', href: '/treatments/' }, { nome: t.nome }]}
-        rotulo={especialidade ? `Tratamento · ${especialidade.nome}` : 'Treatment'}
+        rotulo={especialidade ? `Treatment · ${especialidade.nome}` : 'Treatment'}
         titulo={t.nome}
         texto={t.resumo}
       >

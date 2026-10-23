@@ -40,7 +40,7 @@ const cols = Math.min(4, Math.max(1, equipe.length));
           <p class="pro__esp">{p.especialidade}</p>
           <p class="pro__meta">
             {p.cro}
-            {p.unidades.length > 0 && site.multiUnidade && <> · {p.unidades.map(unidadeNome).join(' e ')}</>}
+            {p.unidades.length > 0 && site.multiUnidade && <> · {p.unidades.map(unidadeNome).join(' and ')}</>}
           </p>
           {p.bio.length > 0 && !p.pagina && (
             <details class="pro__bio">

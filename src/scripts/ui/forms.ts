@@ -92,7 +92,7 @@ function handleSubmit(form: HTMLFormElement, e: SubmitEvent): void {
   }
 
   const success = form.closest('[data-form-wrap]')?.querySelector<HTMLElement>('[data-form-success]');
-  const destino = unidade ? `Unidade ${unidade.nome}`.replace(/^Unidade Unidade/, 'Location') : data.marca;
+  const destino = unidade ? `Location ${unidade.nome}` : data.marca;
 
   if (!numero) {
     // Demonstração: mostra a mensagem que seria enviada.

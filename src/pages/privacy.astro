@@ -3,7 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHeader from '@/components/layout/PageHeader.astro';
 import site, { siteUrl } from '@/lib/site';
 import { breadcrumbLd } from '@/lib/seo';
-const { c } = site.c ? { c: site.c } : { c: site.c };
+const { c } = site;
 const base = siteUrl();
 const privacy = c.legal.encarregado;
 ---
@@ -32,3 +32,12 @@ const privacy = c.legal.encarregado;
     </div>
   </div>
 </BaseLayout>
+
+<style>
+  .page { padding-right: var(--gutter-r); padding-bottom: var(--section-gap); }
+  .legal { margin-top: 56px; max-width: 720px; }
+  .legal h2 { margin-top: 44px; font-family: var(--f-serif); font-size: 28px; line-height: 1.15; }
+  .legal p { margin-top: 14px; font-size: 16px; line-height: 1.7; color: var(--c-ink-2); }
+  .legal__demo { padding: 12px 16px; border: 1px dashed var(--c-line-strong); border-radius: 12px; color: var(--c-muted) !important; }
+  @media (max-width: 899px) { .page { padding-right: var(--gutter); } }
+</style>
