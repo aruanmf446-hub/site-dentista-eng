@@ -556,7 +556,9 @@ def finalize():
         file = ROOT / relative
         if file.exists():
             src = file.read_text(encoding="utf-8")
-            new = replace_pairwise(src, mapping)
+            new = src
+            for a, b in sorted(mapping.items(), key=lambda item: -len(item[0])):
+                new = new.replace(a, b)
             if new != src:
                 file.write_text(new, encoding="utf-8")
                 print("Polished", relative)
