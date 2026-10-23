@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - '.github/workflows/localize-english.yml'
+      - 'scripts/localize-english.py'
   workflow_dispatch:
 
 permissions:
