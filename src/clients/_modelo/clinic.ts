@@ -1,25 +1,19 @@
 /**
- * MODELO PARA UMA NOVA CLÍNICA
+ * Starter profile for a new international dental practice.
  *
- * Não edite este arquivo diretamente. Crie o cliente com:
- *   node scripts/nova-clinica.mjs nome-da-clinica
- * e edite src/clients/nome-da-clinica/clinic.ts.
- *
- * Regras (ver CUSTOMIZATION.md e COMPLIANCE.md):
- * - Tudo entre [colchetes] é placeholder. Substitua por dados REAIS e
- *   verificados. Com `site.modo: 'producao'` o build falha se sobrar algum.
- * - Nunca invente profissionais, CRO, endereços, convênios, preços ou avaliações.
- * - Fotos: coloque os arquivos em ./fotos/ e importe (import fachada from './fotos/fachada.jpg').
- * - Textos de tratamento são conteúdo da clínica: escreva e revise com o
- *   responsável técnico.
+ * Create a client using scripts/nova-clinica.mjs, then edit the generated
+ * src/clients/<client>/clinic.ts with real verified business details.
+ * Bracketed values are placeholders. Do not publish them as real facts.
+ * Confirm clinician credentials, photos, insurance, contact information,
+ * privacy terms and advertising compliance for each target market.
  */
 import { defineClinic } from '../../config/clinic.schema';
 // import fachada from './fotos/fachada.jpg';
 
 export default defineClinic({
   site: {
-    modo: 'demonstracao', // troque para 'producao' quando os dados estiverem completos
-    url: 'https://www.your-dental-practice.com', // troque pelo domínio real
+    modo: 'demonstracao', // Switch to 'producao' only when all details are verified.
+    url: 'https://www.your-dental-practice.com', // Replace with the live client domain.
     titulo: '[Practice Name] — Dental Care in [City]',
     descricao: '[Brief, accurate practice description for search engines.]',
   },
@@ -28,11 +22,11 @@ export default defineClinic({
     nome: '[Practice Name]',
     nomeCurto: '[brand]',
     descritor: 'Dentistry',
-    cores: { primaria: '#5B1626' }, // contraste com texto claro ≥ 4,5:1 (o build avisa)
+    cores: { primaria: '#5B1626' }, // Verify text contrast before publishing.
   },
 
   contato: {
-    whatsapp: '[International WhatsApp number]', // só dígitos, com DDI 55
+    whatsapp: '[International WhatsApp number]', // E.164 country code + national number, digits only.
     telefone: '[+1 000 000 0000]',
     email: '[hello@example-dental.com]',
     redes: {},
@@ -60,7 +54,7 @@ export default defineClinic({
     {
       id: 'principal',
       nome: '[Practice Location]',
-      endereco: { logradouro: '[Street]', numero: '[Number]', bairro: '[Neighborhood]', cidade: '[City]', uf: '[State]' },
+      endereco: { logradouro: '[Street]', numero: '[Number]', bairro: '[Neighborhood]', cidade: '[City]', uf: '[State]', pais: 'US' },
       horarios: [{ dias: 'Mon–Fri', horas: '[9 am–6 pm]' }],
       fotos: [],
     },

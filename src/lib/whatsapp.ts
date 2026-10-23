@@ -8,7 +8,7 @@ import { PLACEHOLDER_RE } from './placeholders';
 export function normalizeNumber(raw: string | undefined | null): string | null {
   if (!raw || PLACEHOLDER_RE.test(raw)) return null;
   const digits = raw.replace(/\D/g, '');
-  return digits.length >= 12 ? digits : null;
+  return /^[1-9]\d{7,14}$/.test(digits) ? digits : null;
 }
 
 export function waUrl(number: string, text: string): string {

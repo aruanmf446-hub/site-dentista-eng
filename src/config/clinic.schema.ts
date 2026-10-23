@@ -17,17 +17,17 @@ import type { ImageMetadata } from 'astro';
 
 const hex = z
   .string()
-  .regex(/^#([0-9a-fA-F]{6})$/, 'Use cor hexadecimal de 6 dígitos, ex.: #5B1626');
+  .regex(/^#([0-9a-fA-F]{6})$/, 'Enter a 6-digit hexadecimal color, e.g. #5B1626');
 
 const slug = z
   .string()
-  .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Use apenas letras minúsculas, números e hífens (ex.: limpeza-dental)');
+  .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Use lowercase letters, numbers and hyphens (e.g. dental-cleaning)');
 
 /** Imagem importada (otimizada pelo Astro) ou caminho em /public / URL absoluta. */
 export const imagemSchema = z.union([
   z.custom<ImageMetadata>(
     (v) => typeof v === 'object' && v !== null && 'src' in v && 'width' in v && 'height' in v,
-    'Imagem inválida: importe o arquivo (import foto from "./fotos/x.jpg")',
+    'Invalid image: import a file (import photo from "./photos/example.jpg")',
   ),
   z.string().min(1),
 ]);
@@ -97,7 +97,7 @@ export const tratamentoSchema = z.object({
   /** Uma frase. Aparece em listas e na meta description se seo.descricao faltar. */
   resumo: z.string(),
   /** Conteúdo próprio da página do tratamento (parágrafos). Não é gerado automaticamente. */
-  descricao: z.array(z.string()).min(1, 'Cada tratamento precisa de conteúdo próprio'),
+  descricao: z.array(z.string()).min(1, 'Each treatment needs its own description'),
   etapas: z.array(z.object({ titulo: z.string(), texto: z.string() })).default([]),
   indicacoes: z.array(z.string()).default([]),
   /** Informação de duração aproximada, apenas se fornecida pela clínica. */
@@ -237,7 +237,7 @@ export const clinicSchema = z.object({
         linkedin: z.url().optional(),
       })
       .default({}),
-    mensagemPadrao: z.string().default('Hello! Gostaria dand arrange a consultation.'),
+    mensagemPadrao: z.string().default('Hello! I would like to schedule a dental consultation.'),
   }),
 
   hero: z.object({
@@ -350,7 +350,7 @@ export const clinicSchema = z.object({
     texto: z.string(),
     /** Opções de interesse/motivo. */
     motivos: z.array(z.string()).min(1),
-    periodos: z.array(z.string()).min(1).default(['Manhã', 'Tarde', 'Noite']),
+    periodos: z.array(z.string()).min(1).default(['Morning', 'Afternoon', 'Evening']),
   }),
 
   legal: z.object({
