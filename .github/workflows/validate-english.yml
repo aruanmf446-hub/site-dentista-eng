@@ -1,0 +1,36 @@
+name: Validate English website
+
+on:
+  push:
+    paths:
+      - '.github/workflows/validate-english.yml'
+      - 'src/**'
+      - 'package.json'
+      - 'package-lock.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  production-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Build international site
+        run: npm run build
+      - name: Verify English SEO and page output
+        run: |
+          test -f dist/index.html
+          test -f dist/treatments/index.html
+          test -f dist/contact/index.html
+          test -f dist/privacy/index.html
+          grep -q 'lang="en"' dist/index.html
+          grep -q 'content="en_US"' dist/index.html
+          ! grep -R -n -E 'lang="pt-BR"|content="pt_BR"|Gostaria de' dist --include='*.html'
