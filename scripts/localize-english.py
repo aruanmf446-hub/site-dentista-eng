@@ -323,7 +323,7 @@ PAGE_MOVES = {
 
 def replace_pairwise(src, mapping):
     for pt, en in sorted(mapping.items(), key=lambda item: -len(item[0])):
-        src = src.replace(pt, en)
+        src = src.replace(pt, en.replace("'", "’"))
     return src
 
 def localize_ui(src):
