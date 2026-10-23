@@ -1,6 +1,6 @@
 /**
  * Formulários de solicitação de horário (sem backend).
- * Valida, monta uma mensagem organizada e abre o WhatsApp da unidade
+ * Valida, monta uma mensagem organizada e abre o Location WhatsApp
  * escolhida. Nada é armazenado ou enviado a servidores do site, e a
  * interface nunca afirma que o agendamento foi confirmado.
  */
@@ -36,25 +36,25 @@ function validate(form: HTMLFormElement): string[] {
   const has = (n: string) => !!form.querySelector(`[name="${n}"]`);
   if (has('nome')) {
     const nome = value(form, 'nome');
-    const msg = !nome ? 'Informe seu nome.' : nome.length < 2 || /^\d+$/.test(nome) ? 'Digite um nome válido.' : null;
+    const msg = !nome ? 'Please enter your name.' : nome.length < 2 || /^\d+$/.test(nome) ? 'Please enter a valid name.' : null;
     setError(form, 'nome', msg);
     if (msg) invalid.push('nome');
   }
   if (has('unidade')) {
     const req = form.querySelector('[name="unidade"][required]');
-    const msg = req && !value(form, 'unidade') ? 'Escolha a unidade.' : null;
+    const msg = req && !value(form, 'unidade') ? 'Please choose a location.' : null;
     setError(form, 'unidade', msg);
     if (msg) invalid.push('unidade');
   }
   if (has('periodo')) {
     const req = form.querySelector('[name="periodo"][required]');
-    const msg = req && !value(form, 'periodo') ? 'Escolha um período.' : null;
+    const msg = req && !value(form, 'periodo') ? 'Please choose a preferred time.' : null;
     setError(form, 'periodo', msg);
     if (msg) invalid.push('periodo');
   }
   const consent = form.querySelector<HTMLInputElement>('[name="consentimento"]');
   if (consent) {
-    const msg = consent.checked ? null : 'Para continuar, autorize o contato sobre este agendamento.';
+    const msg = consent.checked ? null : 'Please agree to be contacted about your appointment request.';
     setError(form, 'consentimento', msg);
     if (msg) invalid.push('consentimento');
   }
@@ -69,7 +69,7 @@ function handleSubmit(form: HTMLFormElement, e: SubmitEvent): void {
     if (status) {
       status.dataset.state = 'error';
       status.textContent =
-        invalid.length === 1 ? 'Revise o campo destacado.' : `Revise os ${invalid.length} campos destacados.`;
+        invalid.length === 1 ? 'Please check the highlighted field.' : `Please check the ${invalid.length} highlighted fields.`;
     }
     form.querySelector<HTMLElement>(`[name="${invalid[0]}"]`)?.focus();
     return;
@@ -92,13 +92,13 @@ function handleSubmit(form: HTMLFormElement, e: SubmitEvent): void {
   }
 
   const success = form.closest('[data-form-wrap]')?.querySelector<HTMLElement>('[data-form-success]');
-  const destino = unidade ? `Unidade ${unidade.nome}`.replace(/^Unidade Unidade/, 'Unidade') : data.marca;
+  const destino = unidade ? `Unidade ${unidade.nome}`.replace(/^Unidade Unidade/, 'Location') : data.marca;
 
   if (!numero) {
     // Demonstração: mostra a mensagem que seria enviada.
     if (status) {
       status.dataset.state = 'ok';
-      status.textContent = 'Mensagem preparada (demonstração).';
+      status.textContent = 'Message prepared (demo).';
     }
     showDemoNotice(mensagem, destino, form.querySelector('button[type="submit"]'));
     return;
@@ -118,7 +118,7 @@ function handleSubmit(form: HTMLFormElement, e: SubmitEvent): void {
     success.querySelector<HTMLElement>('[data-success-title]')?.focus();
   } else if (status) {
     status.dataset.state = 'ok';
-    status.textContent = win ? `Abrimos o WhatsApp (${destino}) em uma nova aba.` : '';
+    status.textContent = win ? `We opened WhatsApp (${destino}) in a new tab.` : '';
     if (!win) window.location.href = url;
   }
 }

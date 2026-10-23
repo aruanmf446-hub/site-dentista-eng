@@ -18,9 +18,9 @@ export function rotaSobreAtiva(): boolean {
 
 export function rotasPublicas(): string[] {
   const c = site.c;
-  const r = ['/', '/tratamentos/', ...c.tratamentos.map((t) => `/tratamentos/${t.slug}/`), '/contato/', '/privacidade/'];
-  if (rotaSobreAtiva()) r.push('/a-clinica/');
-  if (rotaEquipeAtiva()) r.push('/equipe/', ...site.equipeComPagina.map((p) => `/equipe/${p.slug}/`));
-  if (rotaUnidadesAtiva()) r.push('/unidades/', ...c.unidades.map((u) => `/unidades/${u.id}/`));
+  const r = ['/', '/treatments/', ...c.tratamentos.map((t) => `/treatments/${t.slug}/`), '/contact/', '/privacy/'];
+  if (rotaSobreAtiva()) r.push('/about/');
+  if (rotaEquipeAtiva()) r.push('/team/', ...site.equipeComPagina.map((p) => `/team/${p.slug}/`));
+  if (rotaUnidadesAtiva()) r.push('/locations/', ...c.unidades.map((u) => `/locations/${u.id}/`));
   return r;
 }

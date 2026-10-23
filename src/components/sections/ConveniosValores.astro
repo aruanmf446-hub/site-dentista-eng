@@ -22,7 +22,7 @@ const both = convenios && valores;
   {
     convenios && (
       <section id="convenios" class="cv__block" aria-labelledby="conv-title" data-section="convenios">
-        <Eyebrow numero={numero} texto="Convênios" modulo="Módulo opcional" />
+        <Eyebrow numero={numero} texto="Insurance" modulo="Optional section" />
         <Title id="conv-title" class="cv__title" text={c.convenios.titulo} data-reveal="title" />
         <ul role="list" class="cv__grid" style={`--cols:${both ? 3 : 4}`} data-reveal="grid">
           {c.convenios.itens.map((it) => (
@@ -47,7 +47,7 @@ const both = convenios && valores;
   {
     valores && (
       <section id="valores" class="cv__block" aria-labelledby="val-title" data-section="valores">
-        <Eyebrow numero={convenios ? undefined : numero} texto="Valores" modulo="Módulo opcional" />
+        <Eyebrow numero={convenios ? undefined : numero} texto="Pricing" modulo="Optional section" />
         <Title id="val-title" class="cv__title" text={c.valores.titulo} data-reveal="title" />
         <dl class="cv__prices" data-reveal="rows">
           {c.valores.itens.map((v) => (

@@ -1,19 +1,19 @@
 ---
 /**
- * Agendamento rápido do hero (Unidade · Motivo · Período). Não exibe
- * horários disponíveis: abre o WhatsApp da unidade com a solicitação.
+ * Quick appointment request do hero (Unidade · Motivo · Período). Não exibe
+ * horários disponíveis: abre o Location WhatsApp com a solicitação.
  */
 import site from '@/lib/site';
 const { c, multiUnidade } = site;
 ---
 
 <div class="quick" data-form-wrap>
-  <form class="quick__form" aria-label="Agendamento rápido" data-wa-form="quick">
+  <form class="quick__form" aria-label="Quick appointment request" data-wa-form="quick">
     {
       multiUnidade && (
         <>
           <label class="quick__field" data-field="unidade">
-            <span>Unidade</span>
+            <span>Location</span>
             <select name="unidade" required>
               {c.unidades.map((u) => <option value={u.id}>{u.nomeCurto ?? u.nome}</option>)}
             </select>
@@ -23,19 +23,19 @@ const { c, multiUnidade } = site;
       )
     }
     <label class="quick__field quick__field--wide">
-      <span>Motivo</span>
+      <span>Reason</span>
       <select name="motivo">
         {c.agendamento.motivos.map((m) => <option>{m}</option>)}
       </select>
     </label>
     <span class="quick__sep" aria-hidden="true" />
     <label class="quick__field">
-      <span>Período</span>
+      <span>Time of day</span>
       <select name="periodo">
         {c.agendamento.periodos.map((p) => <option>{p}</option>)}
       </select>
     </label>
-    <button type="submit" class="quick__submit">Solicitar horário</button>
+    <button type="submit" class="quick__submit">Request an appointment</button>
   </form>
   <p class="quick__status" data-form-status role="status" aria-live="polite"></p>
 </div>

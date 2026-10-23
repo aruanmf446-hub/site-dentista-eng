@@ -1,6 +1,6 @@
 ---
 /**
- * /equipe/ (lista completa) e /equipe/<slug>/ (perfil, quando `pagina: true`).
+ * /team/ (lista completa) e /team/<slug>/ (perfil, quando `pagina: true`).
  * Não gera nada se o módulo Equipe estiver desligado.
  */
 import type { GetStaticPaths } from 'astro';
@@ -37,13 +37,13 @@ const tratamentos = p
 {
   !p ? (
     <BaseLayout
-      path="/equipe/"
-      title="Equipe"
-      description={`Corpo clínico da ${site.c.marca.nome}.`}
-      jsonLd={[breadcrumbLd([{ nome: 'Início', url: `${base}/` }, { nome: 'Equipe', url: `${base}/equipe/` }])]}
+      path="/team/"
+      title="Team"
+      description={`The dental team at ${site.c.marca.nome}.`}
+      jsonLd={[breadcrumbLd([{ nome: 'Home', url: `${base}/` }, { nome: 'Team', url: `${base}/team/` }])]}
     >
       <div class="container page">
-        <PageHeader trilha={[{ nome: 'Início', href: '/' }, { nome: 'Equipe' }]} rotulo="Corpo clínico" titulo="Quem cuida de *você.*" />
+        <PageHeader trilha={[{ nome: 'Home', href: '/' }, { nome: 'Team' }]} rotulo="Dental team" titulo="The people behind *your care.*" />
         <div class="page__section">
           <Equipe limite={999} />
         </div>
@@ -52,15 +52,15 @@ const tratamentos = p
     </BaseLayout>
   ) : (
     <BaseLayout
-      path={`/equipe/${p.slug}/`}
+      path={`/team/${p.slug}/`}
       title={p.nome}
       description={`${p.nome} — ${p.especialidade}. ${p.cro}.`}
       ogType="article"
       jsonLd={[
         breadcrumbLd([
-          { nome: 'Início', url: `${base}/` },
-          { nome: 'Equipe', url: `${base}/equipe/` },
-          { nome: p.nome, url: `${base}/equipe/${p.slug}/` },
+          { nome: 'Home', url: `${base}/` },
+          { nome: 'Team', url: `${base}/team/` },
+          { nome: p.nome, url: `${base}/team/${p.slug}/` },
         ]),
       ]}
     >
@@ -68,10 +68,10 @@ const tratamentos = p
         <div class="prof__grid">
           <div>
             <PageHeader
-              trilha={[{ nome: 'Início', href: '/' }, { nome: 'Equipe', href: '/equipe/' }, { nome: p.nome }]}
+              trilha={[{ nome: 'Home', href: '/' }, { nome: 'Team', href: '/team/' }, { nome: p.nome }]}
               rotulo={p.especialidade}
               titulo={p.nome}
-              texto={`${p.cro}${p.unidades.length && site.multiUnidade ? ` · Atende em ${p.unidades.map(unidadeNome).join(' e ')}` : ''}`}
+              texto={`${p.cro}${p.unidades.length && site.multiUnidade ? ` · Practices at ${p.unidades.map(unidadeNome).join(' e ')}` : ''}`}
             />
             <div class="prof__bio">
               {p.bio.map((b) => <p data-reveal="text">{b}</p>)}
@@ -86,11 +86,11 @@ const tratamentos = p
             )}
             {tratamentos.length > 0 && (
               <div class="prof__block">
-                <Eyebrow texto="Tratamentos relacionados" />
+                <Eyebrow texto="Related treatments" />
                 <ul role="list" class="rule-list prof__list" data-reveal="rows">
                   {tratamentos.map((t) => (
                     <li>
-                      <a href={`/tratamentos/${t.slug}/`}>{t.nome}</a>
+                      <a href={`/treatments/${t.slug}/`}>{t.nome}</a>
                     </li>
                   ))}
                 </ul>
@@ -102,7 +102,7 @@ const tratamentos = p
           </div>
         </div>
       </div>
-      <CtaBand mensagem={`Olá! Gostaria de agendar uma consulta com ${p.nome}.`} />
+      <CtaBand mensagem={`Hello! I’d like to book an appointment with ${p.nome}.`} />
     </BaseLayout>
   )
 }

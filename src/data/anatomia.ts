@@ -6,25 +6,25 @@
 export const CAMADAS = [
   {
     id: 'esmalte',
-    nome: 'Esmalte',
-    texto: 'Camada externa, a mais dura do corpo. Protege o dente no contato com alimentos e na mastigação.',
+    nome: 'Enamel',
+    texto: 'The hardest substance in the body, enamel protects the outer surface of a tooth.',
   },
   {
     id: 'dentina-polpa',
-    nome: 'Dentina e polpa',
-    texto: 'A dentina sustenta o esmalte e protege a polpa, onde ficam os nervos e vasos que nutrem o dente.',
+    nome: 'Dentin and pulp',
+    texto: 'Dentin supports enamel and protects the pulp, which contains nerves and blood vessels.',
   },
   {
     id: 'raiz',
-    nome: 'Raiz',
-    texto: 'Fica abaixo da gengiva e fixa o dente ao osso.',
+    nome: 'Root',
+    texto: 'Below the gumline, the root anchors the tooth to the jawbone.',
   },
 ] as const;
 
 /** Legendas do quadro B, de cima para baixo (âncoras 3D em scripts/three/anchors.ts). */
 export const LEGENDAS = [
-  { id: 'esmalte', nome: 'Esmalte', texto: 'Camada externa, a mais dura do corpo.' },
-  { id: 'polpa', nome: 'Polpa', texto: 'Nervos e vasos que nutrem o dente.' },
-  { id: 'dentina', nome: 'Dentina', texto: 'Sustenta o esmalte e protege a polpa.' },
-  { id: 'raiz', nome: 'Raiz', texto: 'Fixa o dente ao osso.' },
+  { id: 'esmalte', nome: 'Enamel', texto: 'The outer layer and the hardest substance in the body.' },
+  { id: 'polpa', nome: 'Pulp', texto: 'Nerves and blood vessels that nourish the tooth.' },
+  { id: 'dentina', nome: 'Dentin', texto: 'Supports enamel and protects the pulp.' },
+  { id: 'raiz', nome: 'Root', texto: 'Anchors the tooth to the jawbone.' },
 ] as const;

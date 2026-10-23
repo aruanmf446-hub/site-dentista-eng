@@ -11,20 +11,20 @@ interface Props {
   href?: string;
 }
 const {
-  titulo = 'Vamos cuidar do seu *sorriso?*',
-  texto = 'A equipe responde pelo WhatsApp para combinar o melhor horário.',
+  titulo = 'Ready for a *healthier smile?*',
+  texto = 'Our team will reply on WhatsApp to arrange a convenient appointment.',
   mensagem,
-  href = '/contato/',
+  href = '/contact/',
 } = Astro.props;
 ---
 
-<section class="cta on-primary" data-surface="dark" aria-label="Agendamento">
+<section class="cta on-primary" data-surface="dark" aria-label="Appointments">
   <div class="cta__inner">
     <Title class="cta__title" text={titulo} data-reveal="title" />
     <p class="cta__text">{texto}</p>
     <div class="cta__actions">
-      <WaLink class="btn btn--light btn--lg" mensagem={mensagem}><Icon name="whatsapp" size={20} />Agendar pelo WhatsApp</WaLink>
-      <a href={href} class="btn btn--ghost-light btn--lg">Outras formas de contato</a>
+      <WaLink class="btn btn--light btn--lg" mensagem={mensagem}><Icon name="whatsapp" size={20} />Book via WhatsApp</WaLink>
+      <a href={href} class="btn btn--ghost-light btn--lg">Other ways to contact us</a>
     </div>
   </div>
 </section>

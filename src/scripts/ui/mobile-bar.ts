@@ -1,5 +1,5 @@
 /**
- * Barra fixa do mobile: "Agendar" vira "Ligar" quando o formulário está na tela.
+ * Barra fixa do mobile: "Book now" vira "Call" quando o formulário está na tela.
  * Desktop: o WhatsApp flutuante sai de cena sobre o formulário (que já tem o
  * próprio botão de WhatsApp) para não cobrir o arco e os campos.
  */

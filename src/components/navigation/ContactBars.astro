@@ -2,7 +2,7 @@
 /**
  * Contato sempre acessível:
  * - desktop: botão flutuante de WhatsApp (canto inferior direito);
- * - mobile: barra fixa inferior com WhatsApp + Agendar (troca por "Ligar"
+ * - mobile: barra fixa inferior com WhatsApp + Agendar (troca por "Call"
  *   quando o formulário de agendamento está na tela, como no artboard).
  * O body recebe padding-bottom igual à barra (tokens.css), então ela não
  * encobre conteúdo.
@@ -23,12 +23,12 @@ const tel = site.telefone ? `tel:${site.telefone.replace(/[^\d+]/g, '')}` : null
     <Icon name="whatsapp" size={20} />
     WhatsApp
   </WaLink>
-  <a href="/#agendamento" class="btn btn--outline mbar__alt" data-mbar-agendar>Agendar</a>
+  <a href="/#agendamento" class="btn btn--outline mbar__alt" data-mbar-agendar>Book now</a>
   {
     tel && (
       <a href={tel} class="btn btn--outline mbar__alt" data-mbar-ligar hidden>
         <Icon name="phone" size={18} />
-        Ligar
+        Call
       </a>
     )
   }

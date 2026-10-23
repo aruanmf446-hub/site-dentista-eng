@@ -1,6 +1,6 @@
 ---
 /**
- * Rodapé do artboard "Agendar": marca, responsável técnico (exigência de
+ * Rodapé do artboard "Book now": marca, responsável técnico (exigência de
  * publicidade odontológica), privacidade, redes, razão social e CNPJ.
  */
 import site from '@/lib/site';
@@ -20,11 +20,11 @@ const ano = new Date().getFullYear();
 <footer class="ftr">
   <div class="ftr__inner">
     <a href="/" class="ftr__brand"><Wordmark size="sm" /></a>
-    <p>Responsável técnico: {legal.responsavelTecnico.nome} — {legal.responsavelTecnico.cro}</p>
+    <p>Licensed clinical lead: {legal.responsavelTecnico.nome} — {legal.responsavelTecnico.cro}</p>
     <ul role="list" class="ftr__links">
-      <li><a href="/privacidade/">Política de privacidade</a></li>
-      <li><a href="/tratamentos/">Tratamentos</a></li>
-      {site.multiUnidade && site.ativo('unidades') && <li><a href="/unidades/">Unidades</a></li>}
+      <li><a href="/privacy/">Privacy policy</a></li>
+      <li><a href="/treatments/">Treatments</a></li>
+      {site.multiUnidade && site.ativo('unidades') && <li><a href="/locations/">Locations</a></li>}
       {redes.map(([k, v]) => <li><a href={v} rel="noopener" target="_blank">{nomesRedes[k] ?? k}</a></li>)}
     </ul>
     <p class="ftr__legal">© {ano} {legal.razaoSocial} · CNPJ {legal.cnpj}</p>
@@ -32,8 +32,8 @@ const ano = new Date().getFullYear();
   {
     site.demo && (
       <p class="ftr__demo">
-        Site de demonstração do template. Os dados entre [colchetes] são fictícios e devem ser
-        substituídos por informações reais e revisadas da clínica.
+        Demo website. Details in [brackets] are illustrative and must be
+        replaced with verified practice information before publication.
       </p>
     )
   }

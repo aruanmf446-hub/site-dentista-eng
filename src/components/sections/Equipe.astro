@@ -19,13 +19,13 @@ const cols = Math.min(4, Math.max(1, equipe.length));
 <section id="equipe" class="equipe" aria-labelledby="equipe-title" data-section="equipe">
   <div class="equipe__head">
     <div>
-      <Eyebrow numero={numero} texto="Corpo clínico" modulo="Módulo opcional" />
+      <Eyebrow numero={numero} texto="Dental team" modulo="Optional section" />
       <Title id="equipe-title" class="equipe__title" text={c.equipeSecao.titulo} data-reveal="title" />
     </div>
     {
       temPaginaEquipe && (
-        <a href="/equipe/" class="equipe__all">
-          Ver equipe completa
+        <a href="/team/" class="equipe__all">
+          Meet the full team
           <Icon name="arrow-right" size={16} />
         </a>
       )
@@ -36,7 +36,7 @@ const cols = Math.min(4, Math.max(1, equipe.length));
       equipe.map((p) => (
         <li class="pro">
           <ArchPhoto foto={p.foto} rotulo="[Retrato do(a) dentista]" class="pro__photo" labelAt="bottom" sizes="(max-width: 899px) 45vw, 280px" />
-          <h3 class="pro__name">{p.pagina && p.bio.length ? <a href={`/equipe/${p.slug}/`}>{p.nome}</a> : p.nome}</h3>
+          <h3 class="pro__name">{p.pagina && p.bio.length ? <a href={`/team/${p.slug}/`}>{p.nome}</a> : p.nome}</h3>
           <p class="pro__esp">{p.especialidade}</p>
           <p class="pro__meta">
             {p.cro}
@@ -45,7 +45,7 @@ const cols = Math.min(4, Math.max(1, equipe.length));
           {p.bio.length > 0 && !p.pagina && (
             <details class="pro__bio">
               <summary>
-                Sobre <Icon name="chevron-down" size={14} />
+                About <Icon name="chevron-down" size={14} />
               </summary>
               {p.bio.map((b) => <p>{b}</p>)}
               {p.formacao.length > 0 && (
@@ -56,8 +56,8 @@ const cols = Math.min(4, Math.max(1, equipe.length));
             </details>
           )}
           {p.pagina && p.bio.length > 0 && (
-            <a class="pro__more" href={`/equipe/${p.slug}/`}>
-              Ver perfil <Icon name="arrow-right" size={14} />
+            <a class="pro__more" href={`/team/${p.slug}/`}>
+              View profile <Icon name="arrow-right" size={14} />
             </a>
           )}
         </li>

@@ -11,23 +11,23 @@ const esp = (slug?: string) => c.especialidades.find((e) => e.slug === slug)?.no
 ---
 
 <BaseLayout
-  path="/tratamentos/"
-  title="Tratamentos"
-  description={`Tratamentos odontológicos oferecidos pela ${c.marca.nome}: ${c.tratamentos.map((t) => t.nome.toLowerCase()).join(', ')}.`}
-  jsonLd={[breadcrumbLd([{ nome: 'Início', url: `${base}/` }, { nome: 'Tratamentos', url: `${base}/tratamentos/` }])]}
+  path="/treatments/"
+  title="Treatments"
+  description={`Dental treatments available at ${c.marca.nome}: ${c.tratamentos.map((t) => t.nome.toLowerCase()).join(', ')}.`}
+  jsonLd={[breadcrumbLd([{ nome: 'Home', url: `${base}/` }, { nome: 'Treatments', url: `${base}/treatments/` }])]}
 >
   <div class="container page">
     <PageHeader
-      trilha={[{ nome: 'Início', href: '/' }, { nome: 'Tratamentos' }]}
-      rotulo="Tratamentos"
-      titulo="O que podemos *fazer por você.*"
-      texto="Cada tratamento começa por uma avaliação completa. Conheça os cuidados oferecidos e fale com a equipe para tirar dúvidas."
+      trilha={[{ nome: 'Home', href: '/' }, { nome: 'Treatments' }]}
+      rotulo="Treatments"
+      titulo="Dental care *tailored to you.*"
+      texto="Every treatment starts with a thorough consultation. Explore our services and contact the team with any questions."
     />
     <ul role="list" class="tlist" data-reveal="rows">
       {
         c.tratamentos.map((t, i) => (
           <li>
-            <a href={`/tratamentos/${t.slug}/`} class="tlist__row">
+            <a href={`/treatments/${t.slug}/`} class="tlist__row">
               <span class="tlist__num">{String(i + 1).padStart(2, '0')}</span>
               <span class="tlist__main">
                 <span class="tlist__name">{t.nome}</span>

@@ -1,9 +1,9 @@
 {
-  "name": "alva-template-odontologia",
+  "name": "alva-dental-template-en",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Template comercial reutilizável para sites de clínicas odontológicas brasileiras (identidade de demonstração: Alva Odontologia).",
+  "description": "Professional English-language website template for international dental practices.",
   "engines": {
     "node": ">=22.22.0"
   },

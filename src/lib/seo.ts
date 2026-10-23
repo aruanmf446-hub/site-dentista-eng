@@ -42,9 +42,9 @@ function unidadeLd(u: Unidade, c: ClinicConfig, url: string): Json | null {
   const wa = normalizeNumber(u.whatsapp ?? c.contato.whatsapp);
   return clean({
     '@type': 'Dentist',
-    '@id': `${url}/unidades/${u.id}/#clinica`,
+    '@id': `${url}/locations/${u.id}/#clinica`,
     name: c.unidades.length > 1 ? `${c.marca.nome} — ${u.nome}` : c.marca.nome,
-    url: `${url}/unidades/${u.id}/`,
+    url: `${url}/locations/${u.id}/`,
     telephone: telefone(u, c) ?? (wa ? `+${wa}` : undefined),
     address: clean({
       '@type': 'PostalAddress',
@@ -52,7 +52,7 @@ function unidadeLd(u: Unidade, c: ClinicConfig, url: string): Json | null {
       addressLocality: e.cidade,
       addressRegion: e.uf,
       postalCode: isReal(e.cep) ? e.cep : undefined,
-      addressCountry: 'BR',
+      addressCountry: (e as typeof e & { pais?: string }).pais || 'US',
     }),
     geo: u.geo ? { '@type': 'GeoCoordinates', latitude: u.geo.lat, longitude: u.geo.lng } : undefined,
     openingHoursSpecification: horarios,

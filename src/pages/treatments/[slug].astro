@@ -33,34 +33,34 @@ const profs = especialidade
   : [];
 const outros = c.tratamentos.filter((x) => x.slug !== t.slug);
 const proximo = c.tratamentos[(i + 1) % c.tratamentos.length]!;
-const mensagem = `Olá! Gostaria de saber mais sobre ${t.nome.toLowerCase()} e agendar uma avaliação.`;
+const mensagem = `Hello! I’d like to learn more about ${t.nome.toLowerCase()} and arrange a consultation.`;
 const descricao = t.seo.descricao ?? t.resumo;
 ---
 
 <BaseLayout
-  path={`/tratamentos/${t.slug}/`}
+  path={`/treatments/${t.slug}/`}
   title={t.seo.titulo ?? t.nome}
   description={descricao}
   ogType="article"
   jsonLd={[
     breadcrumbLd([
-      { nome: 'Início', url: `${base}/` },
-      { nome: 'Tratamentos', url: `${base}/tratamentos/` },
-      { nome: t.nome, url: `${base}/tratamentos/${t.slug}/` },
+      { nome: 'Home', url: `${base}/` },
+      { nome: 'Treatments', url: `${base}/treatments/` },
+      { nome: t.nome, url: `${base}/treatments/${t.slug}/` },
     ]),
   ]}
 >
   <article class="trp">
     <div class="trp__top container">
       <PageHeader
-        trilha={[{ nome: 'Início', href: '/' }, { nome: 'Tratamentos', href: '/tratamentos/' }, { nome: t.nome }]}
-        rotulo={especialidade ? `Tratamento · ${especialidade.nome}` : 'Tratamento'}
+        trilha={[{ nome: 'Home', href: '/' }, { nome: 'Treatments', href: '/treatments/' }, { nome: t.nome }]}
+        rotulo={especialidade ? `Tratamento · ${especialidade.nome}` : 'Treatment'}
         titulo={t.nome}
         texto={t.resumo}
       >
         <div class="trp__ctas">
-          <a href="#agendamento" class="btn btn--primary btn--lg">Agendar avaliação <Icon name="arrow-right" class="icon-shift" /></a>
-          <WaLink class="btn btn--outline btn--lg" mensagem={mensagem}><Icon name="whatsapp" />Tirar dúvidas</WaLink>
+          <a href="#agendamento" class="btn btn--primary btn--lg">Book a consultation <Icon name="arrow-right" class="icon-shift" /></a>
+          <WaLink class="btn btn--outline btn--lg" mensagem={mensagem}><Icon name="whatsapp" />Ask a question</WaLink>
         </div>
       </PageHeader>
       <div class="trp__visual">
@@ -71,19 +71,19 @@ const descricao = t.seo.descricao ?? t.resumo;
 
     <div class="trp__body container">
       <section class="trp__block" aria-labelledby="sobre-t">
-        <Eyebrow texto="Sobre o tratamento" />
-        <h2 id="sobre-t" class="sr-only">Sobre o tratamento</h2>
+        <Eyebrow texto="About this treatment" />
+        <h2 id="sobre-t" class="sr-only">About this treatment</h2>
         <div class="trp__prose">
           {t.descricao.map((p) => <p data-reveal="text">{p}</p>)}
-          {t.duracao && <p class="trp__meta"><strong>Duração aproximada:</strong> {t.duracao}</p>}
+          {t.duracao && <p class="trp__meta"><strong>Estimated duration:</strong> {t.duracao}</p>}
         </div>
       </section>
 
       {
         t.etapas.length > 0 && (
           <section class="trp__block" aria-labelledby="etapas-t">
-            <Eyebrow texto="Como funciona" />
-            <h2 id="etapas-t" class="sr-only">Como funciona</h2>
+            <Eyebrow texto="What to expect" />
+            <h2 id="etapas-t" class="sr-only">What to expect</h2>
             <ol role="list" class="trp__steps" data-reveal="rows">
               {t.etapas.map((e, k) => (
                 <li>
@@ -100,8 +100,8 @@ const descricao = t.seo.descricao ?? t.resumo;
       {
         t.indicacoes.length > 0 && (
           <section class="trp__block" aria-labelledby="ind-t">
-            <Eyebrow texto="Quando é indicado" />
-            <h2 id="ind-t" class="sr-only">Quando é indicado</h2>
+            <Eyebrow texto="When it may help" />
+            <h2 id="ind-t" class="sr-only">When it may help</h2>
             <ul role="list" class="rule-list trp__list" data-reveal="rows">
               {t.indicacoes.map((x) => <li>{x}</li>)}
             </ul>
@@ -112,12 +112,12 @@ const descricao = t.seo.descricao ?? t.resumo;
       {
         profs.length > 0 && site.ativo('equipe') && (
           <section class="trp__block" aria-labelledby="prof-t">
-            <Eyebrow texto="Quem acompanha" />
-            <h2 id="prof-t" class="sr-only">Quem acompanha</h2>
+            <Eyebrow texto="Your care team" />
+            <h2 id="prof-t" class="sr-only">Your care team</h2>
             <ul role="list" class="trp__profs">
               {profs.map((p) => (
                 <li>
-                  <span class="trp__prof-name">{p.pagina && p.bio.length ? <a href={`/equipe/${p.slug}/`}>{p.nome}</a> : p.nome}</span>
+                  <span class="trp__prof-name">{p.pagina && p.bio.length ? <a href={`/team/${p.slug}/`}>{p.nome}</a> : p.nome}</span>
                   <span class="trp__prof-meta">{p.especialidade} · {p.cro}</span>
                 </li>
               ))}
@@ -127,16 +127,16 @@ const descricao = t.seo.descricao ?? t.resumo;
       }
 
       <p class="trp__note">
-        Conteúdo informativo. A indicação de qualquer tratamento depende de avaliação clínica individual.
-        {site.demo && ' Texto de exemplo do template: deve ser revisado pelo responsável técnico da clínica.'}
+        General information only. Treatment recommendations require an individual clinical assessment.
+        {site.demo && ' Example template content. Review with the practice’s licensed clinician before publication.'}
       </p>
     </div>
 
-    {t.faq.length > 0 && <div class="container trp__faq"><Faq itens={t.faq} titulo="Dúvidas sobre o *tratamento.*" id="faq-tratamento" /></div>}
+    {t.faq.length > 0 && <div class="container trp__faq"><Faq itens={t.faq} titulo="Questions about *this treatment.*" id="faq-tratamento" /></div>}
 
-    <nav class="container trp__next" aria-label="Outros tratamentos">
-      <a href={`/tratamentos/${proximo.slug}/`} class="trp__next-link">
-        <span class="trp__next-label">Próximo tratamento</span>
+    <nav class="container trp__next" aria-label="Other treatments">
+      <a href={`/treatments/${proximo.slug}/`} class="trp__next-link">
+        <span class="trp__next-label">Next treatment</span>
         <span class="trp__next-name">{proximo.nome}<Icon name="arrow-right" size={24} /></span>
       </a>
       {
@@ -144,7 +144,7 @@ const descricao = t.seo.descricao ?? t.resumo;
           <ul role="list" class="trp__others">
             {outros.slice(0, 8).map((o) => (
               <li>
-                <a href={`/tratamentos/${o.slug}/`}>{o.nome}</a>
+                <a href={`/treatments/${o.slug}/`}>{o.nome}</a>
               </li>
             ))}
           </ul>

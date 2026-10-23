@@ -15,9 +15,9 @@ const { galeria } = site.c;
 ---
 
 <section id="galeria" class="gal" aria-labelledby="gal-title" data-section="galeria">
-  <Eyebrow numero={numero} texto="Galeria" modulo="Módulo opcional" />
+  <Eyebrow numero={numero} texto="Gallery" modulo="Optional section" />
   <Title id="gal-title" class="gal__title" text={galeria.titulo} data-reveal="title" />
-  <ul role="list" class="gal__list" style={`--n:${galeria.fotos.length}`} tabindex="0" aria-label="Fotos da clínica">
+  <ul role="list" class="gal__list" style={`--n:${galeria.fotos.length}`} tabindex="0" aria-label="Dental practice photos">
     {
       galeria.fotos.map((f, i) => (
         <li class="gal__item" style={`--i:${i}`}>

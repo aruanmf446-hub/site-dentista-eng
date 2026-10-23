@@ -72,20 +72,20 @@ export function buildModel(c: ClinicConfig) {
   const capitulos: Capitulo[] = [];
   const push = (id: CapituloId, rotulo: string, ancora: string) =>
     capitulos.push({ id, rotulo, ancora, numero: String(capitulos.length).padStart(2, '0') });
-  push('inicio', 'Início', 'inicio');
-  if (cenaTratamentos) push('tratamentos', 'Tratamentos', 'tratamentos');
-  if (cenaEspecialidades) push('especialidades', 'Especialidades', 'especialidades');
-  if (conteudo.length) push('clinica', ativo('sobre') ? 'A clínica' : 'Clínica', conteudo[0]!);
-  push('agendamento', 'Agendamento', 'agendamento');
+  push('inicio', 'Home', 'inicio');
+  if (cenaTratamentos) push('tratamentos', 'Treatments', 'tratamentos');
+  if (cenaEspecialidades) push('especialidades', 'Specialties', 'especialidades');
+  if (conteudo.length) push('clinica', ativo('sobre') ? 'About us' : 'Practice', conteudo[0]!);
+  push('agendamento', 'Appointments', 'agendamento');
   const numeroDe = (id: CapituloId) => capitulos.find((x) => x.id === id)?.numero;
 
   const nav: NavItem[] = [];
-  if (cenaTratamentos) nav.push({ id: 'tratamentos', rotulo: 'Tratamentos', href: '/#tratamentos' });
-  if (cenaEspecialidades) nav.push({ id: 'especialidades', rotulo: 'Especialidades', href: '/#especialidades' });
-  if (ativo('equipe')) nav.push({ id: 'equipe', rotulo: 'Equipe', href: '/#equipe' });
-  if (ativo('unidades')) nav.push({ id: 'unidades', rotulo: multiUnidade ? 'Unidades' : 'Onde estamos', href: '/#unidades' });
-  if (ativo('convenios')) nav.push({ id: 'convenios', rotulo: 'Convênios', href: '/#convenios', secundario: true });
-  nav.push({ id: 'agendamento', rotulo: 'Contato', href: '/#agendamento' });
+  if (cenaTratamentos) nav.push({ id: 'tratamentos', rotulo: 'Treatments', href: '/#tratamentos' });
+  if (cenaEspecialidades) nav.push({ id: 'especialidades', rotulo: 'Specialties', href: '/#especialidades' });
+  if (ativo('equipe')) nav.push({ id: 'equipe', rotulo: 'Team', href: '/#equipe' });
+  if (ativo('unidades')) nav.push({ id: 'unidades', rotulo: multiUnidade ? 'Locations' : 'Find us', href: '/#unidades' });
+  if (ativo('convenios')) nav.push({ id: 'convenios', rotulo: 'Insurance', href: '/#convenios', secundario: true });
+  nav.push({ id: 'agendamento', rotulo: 'Contact', href: '/#agendamento' });
 
   const central = normalizeNumber(c.contato.whatsapp);
   const mensagem = c.contato.mensagemPadrao;

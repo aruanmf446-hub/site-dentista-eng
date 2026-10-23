@@ -17,17 +17,17 @@ const base = siteUrl();
 ---
 
 <BaseLayout
-  path="/a-clinica/"
-  title="A clínica"
+  path="/about/"
+  title="About us"
   description={semDestaque(c.sobre!.titulo) + ' ' + c.site.descricao}
-  jsonLd={[breadcrumbLd([{ nome: 'Início', url: `${base}/` }, { nome: 'A clínica', url: `${base}/a-clinica/` }])]}
+  jsonLd={[breadcrumbLd([{ nome: 'Home', url: `${base}/` }, { nome: 'About us', url: `${base}/about/` }])]}
 >
   <div class="container page">
-    <PageHeader trilha={[{ nome: 'Início', href: '/' }, { nome: 'A clínica' }]} rotulo="A clínica" titulo={c.sobre!.titulo} />
+    <PageHeader trilha={[{ nome: 'Home', href: '/' }, { nome: 'About us' }]} rotulo="About us" titulo={c.sobre!.titulo} />
     <div class="page__section page__sobre"><Sobre /></div>
     {site.ativo('galeria') && <div class="page__section"><Galeria /></div>}
     <section class="page__section rt" aria-labelledby="rt-t">
-      <Eyebrow texto="Responsabilidade técnica" />
+      <Eyebrow texto="Professional credentials" />
       <h2 id="rt-t" class="rt__title">{c.legal.responsavelTecnico.nome}</h2>
       <p class="rt__text">{c.legal.responsavelTecnico.cro} · {c.legal.razaoSocial} · CNPJ {c.legal.cnpj}</p>
     </section>

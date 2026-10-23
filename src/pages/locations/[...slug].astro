@@ -1,6 +1,6 @@
 ---
 /**
- * /unidades/ e /unidades/<id>/ — páginas locais por filial (SEO local).
+ * /locations/ e /locations/<id>/ — páginas locais por filial (SEO local).
  * Só existem quando há mais de uma unidade e o módulo Unidades está ligado.
  */
 import type { GetStaticPaths } from 'astro';
@@ -32,20 +32,20 @@ interface Props {
 const { u } = Astro.props;
 const base = siteUrl();
 const equipe = u ? site.c.equipe.filter((p) => p.unidades.includes(u.id)) : [];
-const ld = u ? organizationLd(site.c, base).filter((x) => (x['@id'] as string | undefined)?.includes(`/unidades/${u.id}/`)) : [];
+const ld = u ? organizationLd(site.c, base).filter((x) => (x['@id'] as string | undefined)?.includes(`/locations/${u.id}/`)) : [];
 const tel = u ? (isReal(u.telefone) ? u.telefone : null) : null;
 ---
 
 {
   !u ? (
     <BaseLayout
-      path="/unidades/"
-      title="Unidades"
-      description={`Endereços, horários e WhatsApp das unidades da ${site.c.marca.nome}.`}
-      jsonLd={[breadcrumbLd([{ nome: 'Início', url: `${base}/` }, { nome: 'Unidades', url: `${base}/unidades/` }])]}
+      path="/locations/"
+      title="Locations"
+      description={`Addresses, opening hours and WhatsApp contacts for ${site.c.marca.nome}.`}
+      jsonLd={[breadcrumbLd([{ nome: 'Home', url: `${base}/` }, { nome: 'Locations', url: `${base}/locations/` }])]}
     >
       <div class="container page">
-        <PageHeader trilha={[{ nome: 'Início', href: '/' }, { nome: 'Unidades' }]} rotulo="Unidades" titulo="Sempre uma unidade *perto de você.*" />
+        <PageHeader trilha={[{ nome: 'Home', href: '/' }, { nome: 'Locations' }]} rotulo="Locations" titulo="Expert care *close to home.*" />
         <div class="page__section">
           <Unidades />
         </div>
@@ -54,15 +54,15 @@ const tel = u ? (isReal(u.telefone) ? u.telefone : null) : null;
     </BaseLayout>
   ) : (
     <BaseLayout
-      path={`/unidades/${u.id}/`}
+      path={`/locations/${u.id}/`}
       title={`${u.nome}`}
-      description={`${site.c.marca.nome} — ${u.nome}: ${enderecoLinha(u)}. Horários e WhatsApp da unidade.`}
+      description={`${site.c.marca.nome} — ${u.nome}: ${enderecoLinha(u)}. Opening hours and contact information.`}
       jsonLd={[
         ...ld,
         breadcrumbLd([
-          { nome: 'Início', url: `${base}/` },
-          { nome: 'Unidades', url: `${base}/unidades/` },
-          { nome: u.nome, url: `${base}/unidades/${u.id}/` },
+          { nome: 'Home', url: `${base}/` },
+          { nome: 'Locations', url: `${base}/locations/` },
+          { nome: u.nome, url: `${base}/locations/${u.id}/` },
         ]),
       ]}
     >
@@ -70,34 +70,34 @@ const tel = u ? (isReal(u.telefone) ? u.telefone : null) : null;
         <div class="un__grid">
           <div>
             <PageHeader
-              trilha={[{ nome: 'Início', href: '/' }, { nome: 'Unidades', href: '/unidades/' }, { nome: u.nome }]}
-              rotulo="Unidade"
+              trilha={[{ nome: 'Home', href: '/' }, { nome: 'Locations', href: '/locations/' }, { nome: u.nome }]}
+              rotulo="Location"
               titulo={u.nome}
               texto={enderecoLinha(u)}
             >
               <div class="un__ctas">
-                <WaLink unidade={u.id} class="btn btn--primary btn--lg"><Icon name="whatsapp" />WhatsApp da unidade</WaLink>
+                <WaLink unidade={u.id} class="btn btn--primary btn--lg"><Icon name="whatsapp" />Location WhatsApp</WaLink>
                 {u.mapa && (
                   <a href={u.mapa} class="btn btn--outline btn--lg" target="_blank" rel="noopener">
-                    <Icon name="pin" />Como chegar<span class="sr-only"> (abre em nova aba)</span>
+                    <Icon name="pin" />Get directions<span class="sr-only"> (opens in a new tab)</span>
                   </a>
                 )}
               </div>
             </PageHeader>
             <dl class="un__info" data-reveal="info">
               <div>
-                <dt>Horários</dt>
+                <dt>Opening hours</dt>
                 <dd>{u.horarios.map((h) => <span>{h.dias} · {h.horas}</span>)}</dd>
               </div>
               {tel && (
                 <div>
-                  <dt>Telefone</dt>
+                  <dt>Phone</dt>
                   <dd><a href={`tel:${tel.replace(/[^\d+]/g, '')}`}>{tel}</a></dd>
                 </div>
               )}
               {u.observacao && (
                 <div>
-                  <dt>Observação</dt>
+                  <dt>Note</dt>
                   <dd>{u.observacao}</dd>
                 </div>
               )}
@@ -108,7 +108,7 @@ const tel = u ? (isReal(u.telefone) ? u.telefone : null) : null;
                 <ul role="list" class="rule-list" data-reveal="rows">
                   {equipe.map((p) => (
                     <li>
-                      <span>{p.pagina && p.bio.length ? <a href={`/equipe/${p.slug}/`}>{p.nome}</a> : p.nome}</span>
+                      <span>{p.pagina && p.bio.length ? <a href={`/team/${p.slug}/`}>{p.nome}</a> : p.nome}</span>
                       <span class="un__muted">{p.especialidade} · {p.cro}</span>
                     </li>
                   ))}
@@ -121,7 +121,7 @@ const tel = u ? (isReal(u.telefone) ? u.telefone : null) : null;
           </div>
         </div>
       </div>
-      <CtaBand mensagem={`Olá! Gostaria de agendar na ${u.nome}.`} />
+      <CtaBand mensagem={`Hello! I’d like to book an appointment at ${u.nome}.`} />
     </BaseLayout>
   )
 }

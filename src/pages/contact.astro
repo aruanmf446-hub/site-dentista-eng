@@ -8,10 +8,10 @@ const base = siteUrl();
 ---
 
 <BaseLayout
-  path="/contato/"
-  title="Contato e agendamento"
-  description={`Solicite seu horário na ${site.c.marca.nome} pelo WhatsApp. ${site.c.agendamento.texto}`}
-  jsonLd={[breadcrumbLd([{ nome: 'Início', url: `${base}/` }, { nome: 'Contato', url: `${base}/contato/` }])]}
+  path="/contact/"
+  title="Contact and appointments"
+  description={`Request an appointment at ${site.c.marca.nome} pelo WhatsApp. ${site.c.agendamento.texto}`}
+  jsonLd={[breadcrumbLd([{ nome: 'Home', url: `${base}/` }, { nome: 'Contact', url: `${base}/contact/` }])]}
 >
   <Agendamento idPrefix="ct" h1 />
   {site.ativo('unidades') && <div class="container page"><Unidades /></div>}

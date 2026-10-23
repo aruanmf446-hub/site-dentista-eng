@@ -19,28 +19,28 @@ import { defineClinic } from '../../config/clinic.schema';
 export default defineClinic({
   site: {
     modo: 'demonstracao', // troque para 'producao' quando os dados estiverem completos
-    url: 'https://www.dominio-da-clinica.exemplo', // troque pelo domínio real
-    titulo: '[Nome da Clínica] — Odontologia em [Cidade]',
+    url: 'https://www.your-dental-practice.com', // troque pelo domínio real
+    titulo: '[Nome da Clínica] — Odontologia em [City]',
     descricao: '[Descrição curta da clínica para buscadores, até ~155 caracteres.]',
   },
 
   marca: {
     nome: '[Nome da Clínica]',
     nomeCurto: '[nome]',
-    descritor: 'Odontologia',
+    descritor: 'Dentistry',
     cores: { primaria: '#5B1626' }, // contraste com texto claro ≥ 4,5:1 (o build avisa)
   },
 
   contato: {
     whatsapp: '[55DDD000000000]', // só dígitos, com DDI 55
     telefone: '[(00) 0000-0000]',
-    email: '[contato@clinica.com.br]',
+    email: '[hello@example-dental.com]',
     redes: {},
   },
 
   hero: {
-    local: 'Clínica odontológica · [Bairro, Cidade]',
-    titulo: 'O cuidado que\nfica no seu *sorriso.*',
+    local: 'Modern dentistry · [Neighborhood, City]',
+    titulo: 'Thoughtful care for\nyour *best smile.*',
     texto: '[Frase de apresentação da clínica.]',
     visual: '3d',
   },
@@ -60,22 +60,22 @@ export default defineClinic({
     {
       id: 'principal',
       nome: '[Nome da unidade]',
-      endereco: { logradouro: '[Rua]', numero: '[número]', bairro: '[Bairro]', cidade: '[Cidade]', uf: '[UF]' },
-      horarios: [{ dias: 'Seg a sex', horas: '[8h–18h]' }],
+      endereco: { logradouro: '[Street]', numero: '[Number]', bairro: '[Neighborhood]', cidade: '[City]', uf: '[State]' },
+      horarios: [{ dias: 'Mon–Fri', horas: '[8h–18h]' }],
       fotos: [],
     },
   ],
 
   agendamento: {
-    titulo: 'Vamos cuidar do seu *sorriso?*',
-    texto: 'Escolha o melhor período. A equipe confirma o horário com você pelo WhatsApp.',
-    motivos: ['Primeira avaliação', 'Outro assunto'],
+    titulo: 'Ready for a *healthier smile?*',
+    texto: 'Choose your preferred time of day. Our team will confirm the appointment with you on WhatsApp.',
+    motivos: ['New patient consultation', 'Other'],
   },
 
   legal: {
-    responsavelTecnico: { nome: '[Dr(a). Nome]', cro: '[CRO-UF 00000]' },
-    razaoSocial: '[Razão social]',
-    cnpj: '[00.000.000/0000-00]',
-    encarregado: { email: '[privacidade@clinica.com.br]' },
+    responsavelTecnico: { nome: 'Dr. [Full Name]', cro: '[CRO-UF 00000]' },
+    razaoSocial: '[Registered business name]',
+    cnpj: '[Business registration number]',
+    encarregado: { email: '[privacy@example-dental.com]' },
   },
 });

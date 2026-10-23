@@ -12,7 +12,7 @@ const lista = depoimentosPublicaveis(site.c);
   <div class="dep__inner">
     <h2 id="dep-title" class="dep__eyebrow">
       Depoimentos
-      {site.marcarModulos && <span class="module-tag">Módulo opcional</span>}
+      {site.marcarModulos && <span class="module-tag">Optional section</span>}
     </h2>
     <div class="dep__slides" data-reveal="quote">
       {
@@ -32,11 +32,11 @@ const lista = depoimentosPublicaveis(site.c);
     {
       lista.length > 1 && (
         <div class="dep__nav">
-          <button type="button" class="dep__btn" aria-label="Depoimento anterior" data-prev>
+          <button type="button" class="dep__btn" aria-label="Previous testimonial" data-prev>
             <Icon name="arrow-left" size={16} />
           </button>
           <span class="dep__count" data-count aria-hidden="true">1 / {lista.length}</span>
-          <button type="button" class="dep__btn" aria-label="Próximo depoimento" data-next>
+          <button type="button" class="dep__btn" aria-label="Next testimonial" data-next>
             <Icon name="arrow-right" size={16} />
           </button>
           <span class="sr-only" aria-live="polite" data-live />

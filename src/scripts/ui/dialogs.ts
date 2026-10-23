@@ -21,7 +21,7 @@ export function showDemoNotice(mensagem: string, destino: string, trigger?: HTML
   const msg = dlg.querySelector<HTMLElement>('[data-demo-msg]');
   const dest = dlg.querySelector<HTMLElement>('[data-demo-dest]');
   if (msg) msg.textContent = mensagem;
-  if (dest) dest.textContent = destino ? `Destino configurado: WhatsApp — ${destino}.` : '';
+  if (dest) dest.textContent = destino ? `WhatsApp destination — ${destino}.` : '';
   openDialog('demo', trigger);
 }
 

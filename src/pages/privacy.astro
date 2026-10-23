@@ -1,0 +1,34 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/layout/PageHeader.astro';
+import site, { siteUrl } from '@/lib/site';
+import { breadcrumbLd } from '@/lib/seo';
+const { c } = site.c ? { c: site.c } : { c: site.c };
+const base = siteUrl();
+const privacy = c.legal.encarregado;
+---
+<BaseLayout path="/privacy/" title="Privacy Policy"
+  description={`How ${c.marca.nome} handles information provided through this website.`}
+  jsonLd={[breadcrumbLd([{ nome: 'Home', url: `${base}/` }, { nome: 'Privacy Policy', url: `${base}/privacy/` }])]}>
+  <div class="container page">
+    <PageHeader trilha={[{ nome: 'Home', href: '/' }, { nome: 'Privacy Policy' }]}
+      rotulo="Privacy" titulo="Our *Privacy Policy*" />
+    <div class="legal">
+      <p>This is a customizable privacy notice for a demonstration dental website. It is not a substitute for legal review under the laws of the country or state in which the practice operates.</p>
+      <h2>1. About this practice</h2>
+      <p>This site is provided by {c.legal.razaoSocial}, business registration {c.legal.cnpj}. Clinical lead: {c.legal.responsavelTecnico.nome} ({c.legal.responsavelTecnico.cro}).</p>
+      <h2>2. Information you provide</h2>
+      <p>The website does not require you to create an account. When you fill in an appointment request, your name, preferred location, reason for visiting and preferred time of day are assembled into a WhatsApp message on your device. <strong>The website itself does not submit or store this message.</strong> The practice receives it only if you choose to send it through WhatsApp.</p>
+      <p>Please do not submit detailed medical or other sensitive information through the appointment form. Discuss clinical concerns directly with the practice.</p>
+      <h2>3. How information is used</h2>
+      <p>The practice may use the information you send to respond to your request, arrange appointments and manage communications. Local privacy requirements and lawful bases for processing must be confirmed by the practice before launch.</p>
+      <h2>4. Third-party services</h2>
+      <p>Appointment requests may open WhatsApp, a service operated by Meta and subject to its own privacy terms. This template does not include third-party advertising trackers. Confirm any additional integrations before publication.</p>
+      <h2>5. Your choices</h2>
+      <p>You can contact the practice to ask how it handles, accesses, corrects or deletes information you have provided, subject to applicable local law and clinical record-retention obligations.</p>
+      <h2>6. Contact</h2>
+      <p>{privacy?.nome ? privacy.nome + ' — ' : ''}{privacy?.email ? (privacy.email.includes('[') ? privacy.email : <a href={`mailto:${privacy.email}`}>{privacy.email}</a>) : 'Contact the practice through the listed contact options.'}</p>
+      {site.demo && <p class="legal__demo">Demo only. Replace all bracketed placeholders and obtain local legal review before using this policy for a real practice.</p>}
+    </div>
+  </div>
+</BaseLayout>

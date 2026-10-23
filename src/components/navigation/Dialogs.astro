@@ -14,13 +14,13 @@ import WaLink from '@/components/ui/WaLink.astro';
     <dialog class="dlg" id="dlg-unidade" aria-labelledby="dlg-unidade-t" data-dialog="unidade">
       <div class="dlg__head">
         <h2 id="dlg-unidade-t" class="dlg__title">
-          Escolha a <em class="destaque">unidade</em>
+          Choose a <em class="destaque">unidade</em>
         </h2>
         <button type="button" class="dlg__close" aria-label="Fechar" data-dialog-close>
           <Icon name="close" size={20} />
         </button>
       </div>
-      <p class="dlg__text">Cada unidade tem o próprio WhatsApp.</p>
+      <p class="dlg__text">Each location has its own WhatsApp contact.</p>
       <ul role="list" class="dlg__list">
         {site.c.unidades.map((u) => (
           <li>
@@ -43,15 +43,15 @@ import WaLink from '@/components/ui/WaLink.astro';
     <dialog class="dlg" id="dlg-demo" aria-labelledby="dlg-demo-t" data-dialog="demo">
       <div class="dlg__head">
         <h2 id="dlg-demo-t" class="dlg__title">
-          Demonstração do <em class="destaque">template</em>
+          Demo of the <em class="destaque">template</em>
         </h2>
         <button type="button" class="dlg__close" aria-label="Fechar" data-dialog-close>
           <Icon name="close" size={20} />
         </button>
       </div>
       <p class="dlg__text" data-demo-text>
-        Neste site de demonstração o número de WhatsApp ainda é um placeholder. Na clínica real,
-        este botão abre a conversa com a mensagem abaixo já preenchida.
+        In this demo, the WhatsApp number is a placeholder. For a real practice,
+        this button opens a chat with the prefilled message below.
       </p>
       <pre class="dlg__msg" data-demo-msg />
       <p class="dlg__small" data-demo-dest />

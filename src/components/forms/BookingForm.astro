@@ -1,6 +1,6 @@
 ---
 /**
- * Solicitação de horário → WhatsApp da unidade escolhida.
+ * Solicitação de horário → Location WhatsApp escolhida.
  * Coleta só o necessário (nome, unidade, interesse, período) e o
  * consentimento. Não simula agenda e não confirma horários.
  */
@@ -13,7 +13,7 @@ interface Props {
   variant?: 'arch' | 'plain';
   titulo?: string;
 }
-const { id, tratamento, variant = 'arch', titulo = 'Solicite seu horário' } = Astro.props;
+const { id, tratamento, variant = 'arch', titulo = 'Request an appointment' } = Astro.props;
 const { c, multiUnidade } = site;
 const motivos = tratamento ? [tratamento, ...c.agendamento.motivos.filter((m) => m !== tratamento)] : c.agendamento.motivos;
 ---
@@ -23,13 +23,13 @@ const motivos = tratamento ? [tratamento, ...c.agendamento.motivos.filter((m) =>
     <p id={`${id}-t`} class="bf__title">{titulo}</p>
 
     <div class="bf__field" data-field="nome">
-      <label for={`${id}-nome`}>Nome</label>
+      <label for={`${id}-nome`}>Name</label>
       <input
         id={`${id}-nome`}
         name="nome"
         type="text"
         autocomplete="name"
-        placeholder="Seu nome completo"
+        placeholder="Your full name"
         required
         aria-describedby={`${id}-nome-err`}
         maxlength="80"
@@ -40,7 +40,7 @@ const motivos = tratamento ? [tratamento, ...c.agendamento.motivos.filter((m) =>
     {
       multiUnidade && (
         <fieldset class="bf__field bf__units" data-field="unidade" aria-describedby={`${id}-un-err`}>
-          <legend>Unidade</legend>
+          <legend>Location</legend>
           <div class="bf__unit-list">
             {c.unidades.map((u, i) => (
               <label class="bf__unit">
@@ -56,14 +56,14 @@ const motivos = tratamento ? [tratamento, ...c.agendamento.motivos.filter((m) =>
     }
 
     <div class="bf__field" data-field="motivo">
-      <label for={`${id}-motivo`}>Interesse</label>
+      <label for={`${id}-motivo`}>Reason for visit</label>
       <select id={`${id}-motivo`} name="motivo">
         {motivos.map((m) => <option>{m}</option>)}
       </select>
     </div>
 
     <fieldset class="bf__field bf__periods" data-field="periodo">
-      <legend>Período de preferência</legend>
+      <legend>Preferred time of day</legend>
       <div class="bf__pills">
         {
           c.agendamento.periodos.map((p, i) => (
@@ -80,8 +80,8 @@ const motivos = tratamento ? [tratamento, ...c.agendamento.motivos.filter((m) =>
       <label class="bf__check">
         <input type="checkbox" name="consentimento" required aria-describedby={`${id}-cs-err`} />
         <span>
-          Autorizo o contato da clínica sobre este agendamento, conforme a{' '}
-          <a href="/privacidade/">Política de Privacidade</a> (LGPD).
+          I agree to be contacted about this request as outlined in the{' '}
+          <a href="/privacy/">Privacy Policy</a> (LGPD).
         </span>
       </label>
       <p class="bf__err" id={`${id}-cs-err`} data-error-for="consentimento" hidden></p>
@@ -89,25 +89,25 @@ const motivos = tratamento ? [tratamento, ...c.agendamento.motivos.filter((m) =>
 
     <button type="submit" class="bf__submit">
       <Icon name="whatsapp" size={20} />
-      Solicitar pelo WhatsApp
+      Request via WhatsApp
     </button>
     <p class="bf__status" data-form-status role="status" aria-live="polite"></p>
-    <p class="bf__fine">Você envia a mensagem pelo seu WhatsApp. A equipe responde para combinar o horário.</p>
+    <p class="bf__fine">You send the message through WhatsApp. Our team replies to arrange an appointment.</p>
   </form>
 
   <div class="bf__success" data-form-success hidden>
     <span class="bf__success-icon" aria-hidden="true"><Icon name="check" size={22} /></span>
-    <p class="bf__success-title" tabindex="-1" data-success-title>Sua mensagem está pronta</p>
+    <p class="bf__success-title" tabindex="-1" data-success-title>Your message is ready</p>
     <p class="bf__success-text">
-      Abrimos o WhatsApp — <strong data-success-dest></strong> — em uma nova aba. Envie a mensagem
-      por lá; o horário ainda <strong>não está confirmado</strong> até a equipe responder.
+      We opened WhatsApp — <strong data-success-dest></strong> — in a new tab. Send your message
+      there; the appointment is <strong>not yet confirmed</strong> until our team replies.
     </p>
     <pre class="bf__preview" data-success-msg></pre>
     <a href="#" class="bf__submit bf__submit--link" target="_blank" rel="noopener" data-success-link>
       <Icon name="whatsapp" size={20} />
-      Abrir o WhatsApp novamente
+      Open WhatsApp again
     </a>
-    <button type="button" class="bf__again" data-form-reset>Editar solicitação</button>
+    <button type="button" class="bf__again" data-form-reset>Edit request</button>
   </div>
 </div>
 

@@ -26,15 +26,15 @@ export interface PedidoContato {
 /** Mensagem organizada, sem dados sensíveis (não pede CPF, sintomas detalhados etc.). */
 export function buildMensagem(p: PedidoContato): string {
   const linhas: string[] = [];
-  linhas.push(p.nome ? `Olá! Meu nome é ${p.nome.trim()}.` : 'Olá!');
+  linhas.push(p.nome ? `Hello! My name is ${p.nome.trim()}.` : 'Hello!');
   linhas.push(
     p.tratamento
-      ? `Gostaria de saber mais e solicitar um horário para ${p.tratamento}.`
-      : 'Gostaria de solicitar um horário.',
+      ? `I’d like to learn more and request an appointment for ${p.tratamento}.`
+      : 'I’d like to request an appointment.',
   );
   if (p.unidade) linhas.push(`• Unidade: ${p.unidade}`);
   if (p.motivo) linhas.push(`• Interesse: ${p.motivo}`);
-  if (p.periodo) linhas.push(`• Período de preferência: ${p.periodo}`);
-  linhas.push('Fico no aguardo para combinarmos o melhor horário.');
+  if (p.periodo) linhas.push(`• Preferred time of day: ${p.periodo}`);
+  linhas.push('I look forward to arranging a convenient time.');
   return linhas.join('\n');
 }

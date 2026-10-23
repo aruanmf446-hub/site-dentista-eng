@@ -1,7 +1,7 @@
 ---
 /**
  * Header em dois estados, como no design:
- * - completo (hero): marca + descritor, menu, WhatsApp e "Agendar consulta";
+ * - completo (hero): marca + descritor, menu, WhatsApp e "Book an appointment";
  * - compacto (demais seções): pílula branca flutuante centralizada.
  * Abaixo de 900 px: barra com marca e botão de menu (diálogo em tela cheia).
  * Os itens de menu vêm de lib/site.ts e só incluem seções ativas.
@@ -36,8 +36,8 @@ const pillNav = nav.length > 5 ? nav.filter((n) => !n.secundario) : nav;
           <Icon name="whatsapp" />
           WhatsApp
         </WaLink>
-        <a href="/#agendamento" class="btn btn--primary btn--md hdr-full__cta">Agendar consulta</a>
-        <button type="button" class="hdr__menu-btn" aria-label="Abrir menu" aria-haspopup="dialog" aria-controls="menu-dialog" data-menu-open>
+        <a href="/#agendamento" class="btn btn--primary btn--md hdr-full__cta">Book an appointment</a>
+        <button type="button" class="hdr__menu-btn" aria-label="Open menu" aria-haspopup="dialog" aria-controls="menu-dialog" data-menu-open>
           <Icon name="menu" size={22} />
         </button>
       </div>
@@ -48,13 +48,13 @@ const pillNav = nav.length > 5 ? nav.filter((n) => !n.secundario) : nav;
     <a href="/" class="hdr__brand">
       <Wordmark size="md" />
     </a>
-    <nav aria-label="Principal (compacto)" class="hdr-pill__nav">
+    <nav aria-label="Main navigation (compact)" class="hdr-pill__nav">
       <ul role="list">
         {pillNav.map((n) => <li><a href={n.href} data-nav={n.id}>{n.rotulo}</a></li>)}
       </ul>
     </nav>
-    <a href="/#agendamento" class="btn btn--primary btn--sm">Agendar</a>
-    <button type="button" class="hdr__menu-btn hdr__menu-btn--pill" aria-label="Abrir menu" aria-haspopup="dialog" aria-controls="menu-dialog" data-menu-open>
+    <a href="/#agendamento" class="btn btn--primary btn--sm">Book now</a>
+    <button type="button" class="hdr__menu-btn hdr__menu-btn--pill" aria-label="Open menu" aria-haspopup="dialog" aria-controls="menu-dialog" data-menu-open>
       <Icon name="menu" size={22} />
     </button>
   </div>
@@ -65,7 +65,7 @@ const pillNav = nav.length > 5 ? nav.filter((n) => !n.secundario) : nav;
     <a href="/" class="hdr__brand" data-menu-link>
       <Wordmark size="md" />
     </a>
-    <button type="button" class="hdr__menu-btn" aria-label="Fechar menu" data-menu-close>
+    <button type="button" class="hdr__menu-btn" aria-label="Close menu" data-menu-close>
       <Icon name="close" size={22} />
     </button>
   </div>
@@ -81,12 +81,12 @@ const pillNav = nav.length > 5 ? nav.filter((n) => !n.secundario) : nav;
           </li>
         ))
       }
-      <li style={`--i:${nav.length}`}><a href="/tratamentos/" data-menu-link>Todos os tratamentos<Icon name="arrow-right" size={18} /></a></li>
+      <li style={`--i:${nav.length}`}><a href="/treatments/" data-menu-link>All treatments<Icon name="arrow-right" size={18} /></a></li>
     </ul>
   </nav>
   <div class="menu__actions">
-    <WaLink class="btn btn--primary btn--lg btn--block"><Icon name="whatsapp" size={20} />Falar no WhatsApp</WaLink>
-    <a href="/#agendamento" class="btn btn--outline btn--lg btn--block" data-menu-link>Agendar consulta</a>
+    <WaLink class="btn btn--primary btn--lg btn--block"><Icon name="whatsapp" size={20} />Chat on WhatsApp</WaLink>
+    <a href="/#agendamento" class="btn btn--outline btn--lg btn--block" data-menu-link>Book an appointment</a>
     {site.telefone && <a href={`tel:${site.telefone.replace(/[^\d+]/g, '')}`} class="menu__tel"><Icon name="phone" />{site.telefone}</a>}
   </div>
 </dialog>

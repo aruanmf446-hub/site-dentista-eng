@@ -1,6 +1,6 @@
 ---
 /**
- * Unidades (filiais). Com uma unidade só, vira "Onde estamos", sem textos no
+ * Unidades (filiais). Com uma unidade só, vira "Find us", sem textos no
  * plural nem seletores. Cada unidade tem WhatsApp próprio e rota opcional.
  */
 import site, { enderecoLinha } from '@/lib/site';
@@ -18,7 +18,7 @@ const titulo = multiUnidade ? c.unidadesSecao.tituloVarias : c.unidadesSecao.tit
 ---
 
 <section id="unidades" class="unid" aria-labelledby="unid-title" data-section="unidades">
-  <Eyebrow numero={numero} texto={multiUnidade ? 'Unidades' : 'Onde estamos'} modulo={multiUnidade ? 'Módulo opcional · filiais' : 'Unidade única'} />
+  <Eyebrow numero={numero} texto={multiUnidade ? 'Locations' : 'Find us'} modulo={multiUnidade ? 'Optional feature · locations' : 'Single location'} />
   <Title id="unid-title" class="unid__title" text={titulo} data-reveal="title" />
   <ul role="list" class="unid__list" data-reveal="rows">
     {
@@ -27,7 +27,7 @@ const titulo = multiUnidade ? c.unidadesSecao.tituloVarias : c.unidadesSecao.tit
           <ArchPhoto foto={u.fotos[0]} class="unid__photo" sizes="110px" widths={[220, 330]} />
           <div class="unid__main">
             <h3 class="unid__name">
-              {multiUnidade ? <a href={`/unidades/${u.id}/`}>{u.nome}</a> : u.nome}
+              {multiUnidade ? <a href={`/locations/${u.id}/`}>{u.nome}</a> : u.nome}
             </h3>
             <p class="unid__addr">{enderecoLinha(u)}</p>
           </div>
@@ -49,12 +49,12 @@ const titulo = multiUnidade ? c.unidadesSecao.tituloVarias : c.unidadesSecao.tit
             {u.mapa && (
               <a href={u.mapa} class="btn btn--outline unid__btn" target="_blank" rel="noopener">
                 <Icon name="pin" size={16} />
-                Como chegar<span class="sr-only"> à {u.nome} (abre em nova aba)</span>
+                Get directions<span class="sr-only"> à {u.nome} (opens in a new tab)</span>
               </a>
             )}
             <WaLink unidade={u.id} class="btn btn--primary unid__btn" aria-label={`WhatsApp da ${u.nome}`}>
               <Icon name="whatsapp" />
-              {multiUnidade ? 'WhatsApp da unidade' : 'WhatsApp'}
+              {multiUnidade ? 'Location WhatsApp' : 'WhatsApp'}
             </WaLink>
           </div>
         </li>

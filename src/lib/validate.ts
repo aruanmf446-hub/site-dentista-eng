@@ -95,7 +95,7 @@ export function validateClinic(c: ClinicConfig): ValidationReport {
       );
     }
     if (!c.legal.encarregado?.email) {
-      warnings.push('LGPD: informe legal.encarregado.email para a Política de Privacidade.');
+      warnings.push('LGPD: informe legal.encarregado.email para a Privacy Policy.');
     }
     if (/localhost|example\.com|\.exemplo/.test(c.site.url)) errors.push(`site.url parece provisória: ${c.site.url}`);
   } else {

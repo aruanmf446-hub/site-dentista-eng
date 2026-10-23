@@ -3,12 +3,12 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import PageHeader from '@/components/layout/PageHeader.astro';
 ---
 
-<BaseLayout path="/404/" title="Página não encontrada" description="A página procurada não existe.">
+<BaseLayout path="/404/" title="Page not found" description="The page you requested could not be found.">
   <div class="container nf">
-    <PageHeader trilha={[{ nome: 'Início', href: '/' }, { nome: 'Página não encontrada' }]} rotulo="Erro 404" titulo="Esta página *não existe.*" texto="O endereço pode ter mudado. Volte ao início ou veja os tratamentos.">
+    <PageHeader trilha={[{ nome: 'Home', href: '/' }, { nome: 'Page not found' }]} rotulo="Erro 404" titulo="This page *does not exist.*" texto="The page may have moved. Return home or explore our treatments.">
       <div class="nf__ctas">
-        <a href="/" class="btn btn--primary btn--lg">Voltar ao início</a>
-        <a href="/tratamentos/" class="btn btn--outline btn--lg">Ver tratamentos</a>
+        <a href="/" class="btn btn--primary btn--lg">Back to home</a>
+        <a href="/treatments/" class="btn btn--outline btn--lg">Browse treatments</a>
       </div>
     </PageHeader>
   </div>

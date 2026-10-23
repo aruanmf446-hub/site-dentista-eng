@@ -43,7 +43,7 @@ const temAssociacao = porCamada.some((p) => p.itens.length > 0);
   <!-- Quadro C / conteúdo principal -->
   <div class="trat__c" data-cine="trat-c">
     <div class="trat__c-head">
-      <Eyebrow numero={numero} texto="Tratamentos" tone="dark" class="trat__eyebrow" />
+      <Eyebrow numero={numero} texto="Treatments" tone="dark" class="trat__eyebrow" />
       <h2 id="trat-title" class="trat__c-title">
         <span class="only-wide"><Title as="div" class="contents" text={sec.tituloLista} /></span>
         <span class="only-narrow"><Title as="div" class="contents" text={sec.tituloMobile} /></span>
@@ -59,7 +59,7 @@ const temAssociacao = porCamada.some((p) => p.itens.length > 0);
     </div>
 
     <div class="trat__tabs stack-only" data-tabs data-layer-tabs>
-      <div role="tablist" aria-label="Camadas do dente" class="trat__tablist">
+      <div role="tablist" aria-label="Layers of a tooth" class="trat__tablist">
         {
           porCamada.map((cam, i) => (
             <button
@@ -82,11 +82,11 @@ const temAssociacao = porCamada.some((p) => p.itens.length > 0);
             <p class="trat__panel-text">{cam.texto}</p>
             {cam.itens.length > 0 && (
               <>
-                <p class="trat__panel-rel">Cuidados relacionados</p>
+                <p class="trat__panel-rel">Related treatments</p>
                 <ul role="list" class="trat__rows">
                   {cam.itens.map((t) => (
                     <li>
-                      <a href={`/tratamentos/${t.slug}/`}>
+                      <a href={`/treatments/${t.slug}/`}>
                         {t.nome}
                         <Icon name="arrow-right" size={16} />
                       </a>
@@ -110,7 +110,7 @@ const temAssociacao = porCamada.some((p) => p.itens.length > 0);
       {
         itens.map((t, i) => (
           <li data-item={i}>
-            <a href={`/tratamentos/${t.slug}/`}>
+            <a href={`/treatments/${t.slug}/`}>
               <span class="trat__num">{String(i + 1).padStart(2, '0')}</span>
               <span class="trat__name">{t.nome}</span>
               <Icon name="arrow-right" size={16} />
@@ -121,9 +121,9 @@ const temAssociacao = porCamada.some((p) => p.itens.length > 0);
     </ul>
 
     <div class="trat__ctas" data-cine="trat-cta">
-      <a href="/#agendamento" class="btn btn--light btn--lg">Agendar avaliação</a>
-      <a href="/tratamentos/" class="trat__all">
-        {restantes > 0 ? `Ver todos os ${c.tratamentos.length} tratamentos` : 'Ver todos os tratamentos'}
+      <a href="/#agendamento" class="btn btn--light btn--lg">Book a consultation</a>
+      <a href="/treatments/" class="trat__all">
+        {restantes > 0 ? `Ver todos os ${c.tratamentos.length} tratamentos` : 'View all treatments'}
       </a>
     </div>
   </div>
@@ -131,18 +131,18 @@ const temAssociacao = porCamada.some((p) => p.itens.length > 0);
        para manter a hierarquia de títulos (h2 → h3) -->
   <!-- Quadro A -->
   <div class="trat__a cine-only" data-cine="trat-a">
-    <Eyebrow numero={numero} texto="Tratamentos" tone="dark" />
+    <Eyebrow numero={numero} texto="Treatments" tone="dark" />
     <Title as="p" class="trat__a-title" text={sec.tituloAbertura} />
   </div>
-  <div class="trat__hint cine-only" aria-hidden="true" data-cine="trat-hint">Role para abrir<span /></div>
+  <div class="trat__hint cine-only" aria-hidden="true" data-cine="trat-hint">Scroll to explore<span /></div>
 
   <!-- Quadro B -->
   <div class="trat__b cine-only" data-cine="trat-b">
-    <Eyebrow numero={numero} texto="Tratamentos" tone="dark" />
+    <Eyebrow numero={numero} texto="Treatments" tone="dark" />
     <Title as="h3" class="trat__b-title" text={sec.tituloAnatomia} />
     <p class="trat__b-text">{sec.textoAnatomia}</p>
   </div>
-  <ul class="trat__labels cine-only" role="list" aria-label="Estruturas do dente" data-cine="trat-labels">
+  <ul class="trat__labels cine-only" role="list" aria-label="Tooth anatomy" data-cine="trat-labels">
     {
       LEGENDAS.map((l) => (
         <li class="trat__label" data-label={l.id}>
@@ -705,7 +705,7 @@ const temAssociacao = porCamada.some((p) => p.itens.length > 0);
     :global(html.is-cinema) .trat__list--poucos .trat__name {
       font-size: 26px;
     }
-    /* a lista completa fica em /tratamentos/ (link "Ver todos") */
+    /* a lista completa fica em /treatments/ (link "Ver todos") */
     :global(html.is-cinema) .trat__list li:nth-child(n + 7) {
       display: none;
     }

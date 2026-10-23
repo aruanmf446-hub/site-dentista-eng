@@ -18,11 +18,11 @@ const total = String(specs.length).padStart(2, '0');
 const linkPara = (s: (typeof specs)[number]) => {
   const prof = s.profissionais.map((p) => c.equipe.find((e) => e.slug === p)).filter(Boolean);
   const comPagina = prof.find((p) => p!.pagina && p!.bio.length);
-  if (comPagina) return { href: `/equipe/${comPagina.slug}/`, rotulo: `Conheça ${comPagina.nome}` };
-  if (prof.length && site.ativo('equipe')) return { href: '/#equipe', rotulo: 'Conheça os especialistas' };
+  if (comPagina) return { href: `/team/${comPagina.slug}/`, rotulo: `Conheça ${comPagina.nome}` };
+  if (prof.length && site.ativo('equipe')) return { href: '/#equipe', rotulo: 'Meet our specialists' };
   const trat = c.tratamentos.find((t) => t.especialidade === s.slug);
-  if (trat) return { href: `/tratamentos/${trat.slug}/`, rotulo: `Saiba mais sobre ${trat.nome.toLowerCase()}` };
-  return { href: '/#agendamento', rotulo: 'Agendar avaliação' };
+  if (trat) return { href: `/treatments/${trat.slug}/`, rotulo: `Saiba mais sobre ${trat.nome.toLowerCase()}` };
+  return { href: '/#agendamento', rotulo: 'Book a consultation' };
 };
 const presets = specs.map((s) => ({ dentes: dentesDestacados(s.destaque.dentes), efeito: s.destaque.efeito }));
 ---
@@ -39,7 +39,7 @@ const presets = specs.map((s) => ({ dentes: dentesDestacados(s.destaque.dentes),
   <script type="application/json" data-esp-presets set:html={JSON.stringify(presets)} />
   <div class="esp__inner">
     <div class="esp__copy" data-cine="esp-copy">
-      <Eyebrow numero={numeroDe('especialidades')} texto="Especialidades" />
+      <Eyebrow numero={numeroDe('especialidades')} texto="Specialties" />
       <Title id="esp-title" class="esp__title" text={c.especialidadesSecao.titulo} />
       <ul role="list" class="esp__list" style={`--n:${specs.length}`} data-cine="esp-list">
         {
@@ -90,7 +90,7 @@ const presets = specs.map((s) => ({ dentes: dentesDestacados(s.destaque.dentes),
       </div>
     </div>
   </div>
-  <p class="esp__note">Destaques ilustrativos. O diagnóstico e a indicação de tratamento dependem de avaliação clínica.</p>
+  <p class="esp__note">Illustrations only. Diagnosis and treatment recommendations require an individual clinical assessment.</p>
 </section>
 
 <style>

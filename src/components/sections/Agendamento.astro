@@ -23,18 +23,18 @@ const horarios = principal.horarios.map((h) => `${h.dias} ${h.horas}`).join(' ·
 <section id="agendamento" class="ag" aria-labelledby={`${idPrefix}-title`} data-section="agendamento">
   <div class="ag__inner">
     <div class="ag__copy">
-      <Eyebrow numero={numero} texto="Agendamento" />
+      <Eyebrow numero={numero} texto="Appointments" />
       <Title as={h1 ? 'h1' : 'h2'} id={`${idPrefix}-title`} class="ag__title" text={c.agendamento.titulo} data-reveal={h1 ? undefined : 'title'} />
       <p class="ag__text">{c.agendamento.texto}</p>
-      <WaLink class="ag__cta" mensagem={tratamento ? `Olá! Gostaria de agendar uma avaliação para ${tratamento}.` : undefined}>
-        <span><Icon name="whatsapp" size={22} />Agendar pelo WhatsApp</span>
+      <WaLink class="ag__cta" mensagem={tratamento ? `Hello! I’d like to book a consultation for ${tratamento}.` : undefined}>
+        <span><Icon name="whatsapp" size={22} />Book via WhatsApp</span>
         <Icon name="arrow-right" class="icon-shift" />
       </WaLink>
       <dl class="ag__info" data-reveal="info">
         {
           c.contato.telefone && (
             <div>
-              <dt>Telefone</dt>
+              <dt>Phone</dt>
               <dd>{site.telefone ? <a href={`tel:${site.telefone.replace(/[^\d+]/g, '')}`}>{site.telefone}</a> : c.contato.telefone}</dd>
             </div>
           )
@@ -42,19 +42,19 @@ const horarios = principal.horarios.map((h) => `${h.dias} ${h.horas}`).join(' ·
         {
           c.contato.email && (
             <div>
-              <dt>E-mail</dt>
+              <dt>Email</dt>
               <dd>{c.contato.email.includes('[') ? c.contato.email : <a href={`mailto:${c.contato.email}`}>{c.contato.email}</a>}</dd>
             </div>
           )
         }
         <div>
-          <dt>{site.multiUnidade ? 'Unidade principal' : 'Endereço'}</dt>
+          <dt>{site.multiUnidade ? 'Main location' : 'Endereço'}</dt>
           <dd>{enderecoLinha(principal)}</dd>
         </div>
         {
           horarios && (
             <div>
-              <dt>Horários</dt>
+              <dt>Opening hours</dt>
               <dd>{horarios}</dd>
             </div>
           )

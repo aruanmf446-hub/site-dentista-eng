@@ -69,7 +69,7 @@ const horarioSchema = z.object({
 
 export const unidadeSchema = z.object({
   id: slug,
-  /** Nome completo, ex.: "Unidade Centro" */
+  /** Nome completo, ex.: "Downtown practice" */
   nome: z.string(),
   /** Nome curto para seletores, ex.: "Centro" */
   nomeCurto: z.string().optional(),
@@ -80,7 +80,7 @@ export const unidadeSchema = z.object({
   whatsapp: z.string().optional(),
   telefone: z.string().optional(),
   email: z.string().optional(),
-  /** Link de rota (Google Maps, Waze…). Sem ele, o botão "Como chegar" não aparece. */
+  /** Link de rota (Google Maps, Waze…). Sem ele, o botão "Get directions" não aparece. */
   mapa: z.url().optional(),
   fotos: z.array(fotoSchema).default([]),
   /** Coordenadas opcionais para dados estruturados. */
@@ -150,13 +150,13 @@ export const profissionalSchema = z.object({
   foto: fotoSchema.optional(),
   /** Ex.: "CRO-SP 12345". Verificado pelo cliente; nunca invente. */
   cro: z.string(),
-  /** Especialidade(s) exibida(s), ex.: "Ortodontia" */
+  /** Especialidade(s) exibida(s), ex.: "Orthodontics" */
   especialidade: z.string(),
   /** ids das unidades onde atende */
   unidades: z.array(slug).default([]),
   bio: z.array(z.string()).default([]),
   formacao: z.array(z.string()).default([]),
-  /** Gera página própria em /equipe/<slug>/ */
+  /** Gera página própria em /team/<slug>/ */
   pagina: z.boolean().default(false),
 });
 
@@ -208,7 +208,7 @@ export const clinicSchema = z.object({
     nome: z.string(),
     /** Palavra da marca em serif itálico (ex.: "alva"). */
     nomeCurto: z.string(),
-    /** Texto pequeno ao lado da marca (ex.: "Odontologia"). */
+    /** Texto pequeno ao lado da marca (ex.: "Dentistry"). */
     descritor: z.string().optional(),
     /** Logo em imagem/SVG. Sem logo, usa a marca tipográfica do design. */
     logo: z
@@ -235,7 +235,7 @@ export const clinicSchema = z.object({
         linkedin: z.url().optional(),
       })
       .default({}),
-    mensagemPadrao: z.string().default('Olá! Gostaria de agendar uma avaliação.'),
+    mensagemPadrao: z.string().default('Hello! Gostaria dand arrange a consultation.'),
   }),
 
   hero: z.object({
@@ -245,36 +245,36 @@ export const clinicSchema = z.object({
     /** '3d' = dente tridimensional; 'foto' = foto real da clínica no arco. */
     visual: z.enum(['3d', 'foto']).default('3d'),
     foto: fotoSchema.optional(),
-    ctaPrimario: z.string().default('Agendar avaliação'),
+    ctaPrimario: z.string().default('Book a consultation'),
     nota: z.string().optional(),
     agendamentoRapido: z.boolean().default(true),
   }),
 
   tratamentosSecao: z
     .object({
-      tituloAbertura: tituloSchema.default('Cuidado em cada detalhe, *por dentro e por fora.*'),
-      tituloAnatomia: tituloSchema.default('Conheça o dente *por dentro.*'),
+      tituloAbertura: tituloSchema.default('Expert care, *inside and out.*'),
+      tituloAnatomia: tituloSchema.default('Discover what’s *inside a tooth.*'),
       textoAnatomia: z
         .string()
         .default(
-          'Esmalte, dentina, polpa e raiz trabalham juntos. Por isso, todo tratamento começa por uma avaliação completa.',
+          'Enamel, dentin, pulp and roots work together. That’s why every treatment starts with a thorough examination.',
         ),
-      tituloLista: tituloSchema.default('O que podemos *fazer por você.*'),
-      tituloMobile: tituloSchema.default('Cada camada do dente, um *cuidado.*'),
+      tituloLista: tituloSchema.default('Dental care *tailored to you.*'),
+      tituloMobile: tituloSchema.default('Every layer deserves *expert care.*'),
     })
     .default({
-      tituloAbertura: 'Cuidado em cada detalhe, *por dentro e por fora.*',
-      tituloAnatomia: 'Conheça o dente *por dentro.*',
+      tituloAbertura: 'Expert care, *inside and out.*',
+      tituloAnatomia: 'Discover what’s *inside a tooth.*',
       textoAnatomia:
-        'Esmalte, dentina, polpa e raiz trabalham juntos. Por isso, todo tratamento começa por uma avaliação completa.',
-      tituloLista: 'O que podemos *fazer por você.*',
-      tituloMobile: 'Cada camada do dente, um *cuidado.*',
+        'Enamel, dentin, pulp and roots work together. That’s why every treatment starts with a thorough examination.',
+      tituloLista: 'Dental care *tailored to you.*',
+      tituloMobile: 'Every layer deserves *expert care.*',
     }),
   tratamentos: z.array(tratamentoSchema).min(1, 'Cadastre pelo menos um tratamento'),
 
   especialidadesSecao: z
-    .object({ titulo: tituloSchema.default('Um especialista para cada *etapa* do seu sorriso.') })
-    .default({ titulo: 'Um especialista para cada *etapa* do seu sorriso.' }),
+    .object({ titulo: tituloSchema.default('Specialists for every *stage* of your smile.') })
+    .default({ titulo: 'Specialists for every *stage* of your smile.' }),
   especialidades: z.array(especialidadeSchema).default([]),
 
   sobre: z
@@ -284,34 +284,34 @@ export const clinicSchema = z.object({
       diferenciais: z.array(z.object({ texto: z.string(), rotulo: z.string() })).default([]),
       fotos: z.array(fotoSchema).max(2).default([]),
       /** Placeholders exibidos no modo demonstração quando não há fotos. */
-      rotulosFotos: z.array(z.string()).default(['Recepção', 'Consultório']),
+      rotulosFotos: z.array(z.string()).default(['Reception', 'Treatment room']),
     })
     .optional(),
 
   equipeSecao: z
-    .object({ titulo: tituloSchema.default('Quem cuida de *você.*') })
-    .default({ titulo: 'Quem cuida de *você.*' }),
+    .object({ titulo: tituloSchema.default('The people behind *your care.*') })
+    .default({ titulo: 'The people behind *your care.*' }),
   equipe: z.array(profissionalSchema).default([]),
 
   unidadesSecao: z
     .object({
-      tituloVarias: tituloSchema.default('Sempre uma unidade *perto de você.*'),
-      tituloUnica: tituloSchema.default('Onde *estamos.*'),
+      tituloVarias: tituloSchema.default('Expert care *close to home.*'),
+      tituloUnica: tituloSchema.default('Find us *near you.*'),
     })
-    .default({ tituloVarias: 'Sempre uma unidade *perto de você.*', tituloUnica: 'Onde *estamos.*' }),
+    .default({ tituloVarias: 'Expert care *close to home.*', tituloUnica: 'Find us *near you.*' }),
   unidades: z.array(unidadeSchema).min(1, 'Cadastre pelo menos uma unidade'),
 
   convenios: z
     .object({
-      titulo: tituloSchema.default('Convênios aceitos'),
+      titulo: tituloSchema.default('Accepted insurance plans'),
       itens: z.array(convenioSchema).default([]),
       observacao: z.string().optional(),
     })
-    .default({ titulo: 'Convênios aceitos', itens: [] }),
+    .default({ titulo: 'Accepted insurance plans', itens: [] }),
 
   valores: z
     .object({
-      titulo: tituloSchema.default('Valores de referência'),
+      titulo: tituloSchema.default('Treatment pricing'),
       /**
        * A divulgação de preços é restrita pelo Código de Ética Odontológica.
        * Para publicar em produção, o responsável técnico precisa revisar e
@@ -321,30 +321,30 @@ export const clinicSchema = z.object({
       itens: z.array(z.object({ item: z.string(), valor: z.string() })).default([]),
       observacao: z
         .string()
-        .default('O plano de tratamento e o orçamento final são definidos após a avaliação clínica.'),
+        .default('Treatment plans and final quotes are provided after a clinical consultation.'),
     })
     .default({
-      titulo: 'Valores de referência',
+      titulo: 'Treatment pricing',
       revisadoPeloResponsavel: false,
       itens: [],
-      observacao: 'O plano de tratamento e o orçamento final são definidos após a avaliação clínica.',
+      observacao: 'Treatment plans and final quotes are provided after a clinical consultation.',
     }),
 
   depoimentos: z.array(depoimentoSchema).default([]),
 
   galeria: z
-    .object({ titulo: tituloSchema.default('Conheça o *espaço.*'), fotos: z.array(fotoSchema).default([]) })
-    .default({ titulo: 'Conheça o *espaço.*', fotos: [] }),
+    .object({ titulo: tituloSchema.default('Explore our *practice.*'), fotos: z.array(fotoSchema).default([]) })
+    .default({ titulo: 'Explore our *practice.*', fotos: [] }),
 
   faq: z
     .object({
-      titulo: tituloSchema.default('Perguntas *frequentes.*'),
+      titulo: tituloSchema.default('Frequently asked *questions.*'),
       itens: z.array(z.object({ pergunta: z.string(), resposta: z.string() })).default([]),
     })
-    .default({ titulo: 'Perguntas *frequentes.*', itens: [] }),
+    .default({ titulo: 'Frequently asked *questions.*', itens: [] }),
 
   agendamento: z.object({
-    titulo: tituloSchema.default('Vamos cuidar do seu *sorriso?*'),
+    titulo: tituloSchema.default('Ready for a *healthier smile?*'),
     texto: z.string(),
     /** Opções de interesse/motivo. */
     motivos: z.array(z.string()).min(1),
@@ -404,7 +404,7 @@ export const clinicSchema = z.object({
 
   demo: z
     .object({
-      /** Mostra a etiqueta "Módulo opcional" nas seções (apenas demonstração). */
+      /** Mostra a etiqueta "Optional section" nas seções (apenas demonstração). */
       marcarModulos: z.boolean().default(true),
     })
     .default({ marcarModulos: true }),

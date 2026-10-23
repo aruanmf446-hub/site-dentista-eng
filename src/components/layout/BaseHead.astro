@@ -10,7 +10,7 @@ import { organizationLd } from '@/lib/seo';
 interface Props {
   title?: string | undefined;
   description?: string | undefined;
-  /** caminho canônico, ex.: "/tratamentos/limpeza/" */
+  /** caminho canônico, ex.: "/treatments/limpeza/" */
   path: string;
   jsonLd?: Record<string, unknown>[];
   cinema?: boolean;
@@ -47,7 +47,7 @@ const ld = [...(path === '/' ? organizationLd(c, base) : []), ...jsonLd];
 <link rel="sitemap" href="/sitemap.xml" />
 
 <meta property="og:type" content={ogType} />
-<meta property="og:locale" content="pt_BR" />
+<meta property="og:locale" content="en_US" />
 <meta property="og:site_name" content={c.marca.nome} />
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={desc} />
